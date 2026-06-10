@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Datenschutzerklärung – Tauben Merge</title>
+  <style>
+    :root {
+      --bg:        #f4f6f9;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --accent:    #3b7dd8;
+      --accent-lt: #ebf2ff;
+      --text:      #1e2a3a;
+      --muted:     #64748b;
+      --green:     #16a34a;
+      --red:       #dc2626;
+      --radius:    10px;
+      --shadow:    0 2px 12px rgba(0,0,0,.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d6bb5 100%);
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    header .dove { font-size: 3rem; margin-bottom: 12px; }
+    header h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 6px; }
+    header p  { opacity: .85; font-size: .95rem; }
+
+    /* ── Layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    .toc h2 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .toc ol  { padding-left: 20px; }
+    .toc li  { margin-bottom: 6px; }
+    .toc a   { color: var(--accent); text-decoration: none; font-size: .93rem; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── Info box ── */
+    .info-box {
+      background: var(--accent-lt);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      font-size: .93rem;
+      color: #1e3a5f;
+    }
+
+    /* ── Section cards ── */
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      scroll-margin-top: 24px;
+    }
+
+    section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-lt);
+      color: #1e3a5f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: .8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 20px 0 8px;
+      color: var(--text);
+    }
+
+    section p  { margin-bottom: 12px; }
+    section ul, section ol { padding-left: 20px; margin-bottom: 12px; }
+    section li { margin-bottom: 6px; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    th {
+      background: #f0f4fa;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #fafbfd; }
+
+    /* ── Yes / No badges ── */
+    .yes { color: var(--green); font-weight: 700; }
+    .no  { color: var(--red);   font-weight: 700; }
+
+    /* ── Right list ── */
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .right-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .right-card strong { display: block; margin-bottom: 4px; color: var(--accent); font-size: .92rem; }
+    .right-card span   { font-size: .87rem; color: var(--muted); }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .93rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .icon { flex-shrink: 0; font-size: 1rem; }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: #f0f4fa;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+    .contact-card p { margin-bottom: 4px; }
+    .contact-card a { color: var(--accent); word-break: break-all; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 16px;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 20px 18px; }
+      header h1 { font-size: 1.5rem; }
+      .rights-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="dove">🕊️</div>
+  <h1>Datenschutzerklärung</h1>
+  <p>Tauben Merge &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; Stand: Juni 2026</p>
+</header>
+
+<main>
+
+  <!-- Info box -->
+  <div class="info-box">
+    <strong>Kurzfassung:</strong> Tauben Merge ist werbefrei und sammelt keine persönlichen Daten automatisch.
+    Nur wer freiwillig an der <strong>Rangliste</strong> teilnimmt, übermittelt einen selbst gewählten Spitznamen
+    und seinen Highscore an unseren Server in der EU (Belgien). Alles andere bleibt ausschließlich auf deinem Gerät.
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc" aria-label="Inhaltsverzeichnis">
+    <h2>Inhaltsverzeichnis</h2>
+    <ol>
+      <li><a href="#s1">Verantwortlicher</a></li>
+      <li><a href="#s2">Welche Daten werden erhoben?</a></li>
+      <li><a href="#s3">Lokaler Speicher (nur auf deinem Gerät)</a></li>
+      <li><a href="#s4">App-Berechtigungen</a></li>
+      <li><a href="#s5">Zweck der Verarbeitung</a></li>
+      <li><a href="#s6">Rechtsgrundlage (DSGVO)</a></li>
+      <li><a href="#s7">Drittanbieter: Google Firebase</a></li>
+      <li><a href="#s8">Datentransfer in Drittländer</a></li>
+      <li><a href="#s9">Datenweitergabe und -verkauf</a></li>
+      <li><a href="#s10">Datenspeicherung und Löschung</a></li>
+      <li><a href="#s11">Datensicherheit</a></li>
+      <li><a href="#s12">Kinder und Jugendliche</a></li>
+      <li><a href="#s13">Deine Rechte nach DSGVO</a></li>
+      <li><a href="#s14">Kontakt und Widerruf</a></li>
+      <li><a href="#s15">Änderungen dieser Datenschutzerklärung</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 Verantwortlicher -->
+  <section id="s1">
+    <h2><span class="num">1</span> Verantwortlicher</h2>
+    <p>
+      Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) und des Bundesdatenschutzgesetzes (BDSG) ist:
+    </p>
+    <div class="contact-card">
+      <p><strong>Ben Max</strong> (Entwickler-Name: Smikra)</p>
+      <p>App: Tauben Merge (com.maxim.taubenmerge)</p>
+      <p>E-Mail: <a href="mailto:vogelverschmelzung@gmail.com">vogelverschmelzung@gmail.com</a></p>
+    </div>
+    <p style="margin-top:14px; font-size:.9rem; color:var(--muted);">
+      Bei Fragen zum Datenschutz kannst du uns jederzeit per E-Mail erreichen.
+    </p>
+  </section>
+
+  <!-- 2 Welche Daten -->
+  <section id="s2">
+    <h2><span class="num">2</span> Welche Daten werden erhoben?</h2>
+
+    <h3>A) Keine Daten – Normales Spielen</h3>
+    <p>
+      Beim einfachen Spielen ohne Ranglisten-Teilnahme werden <strong>keinerlei personenbezogene Daten</strong>
+      an uns oder Dritte übermittelt. Alle Spielfortschritte verbleiben ausschließlich lokal auf deinem Gerät
+      (siehe Abschnitt 3).
+    </p>
+
+    <h3>B) Rangliste (freiwillig)</h3>
+    <p>
+      Wenn du dich entscheidest, an der öffentlichen Rangliste teilzunehmen, werden folgende Daten
+      an unsere Firebase-Datenbank übermittelt:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Datenkategorie</th>
+            <th>Konkrete Daten</th>
+            <th>Pflicht?</th>
+            <th>Öffentlich sichtbar?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Name / Alias</td>
+            <td>Frei gewählter Spitzname (2–20 Zeichen)</td>
+            <td>Ja (für Teilnahme)</td>
+            <td>Ja</td>
+          </tr>
+          <tr>
+            <td>App-Aktivität</td>
+            <td>Highscore (Punktzahl)</td>
+            <td>Ja (für Teilnahme)</td>
+            <td>Ja</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Was wir ausdrücklich NICHT erfassen:</strong> echten Namen, E-Mail-Adresse,
+      Geräte-ID (Android ID / GAID), IP-Adresse (nicht gespeichert, nur für die Übertragung
+      technisch notwendig), Standort, Kontakte oder sonstige personenbezogene Daten.
+    </p>
+    <p>
+      Ein frei gewählter Spitzname kann – je nach Wahl – ein Pseudonym sein oder personenbezogene
+      Informationen enthalten. Wähle daher keinen Spitznamen, der deinen echten Namen oder andere
+      persönliche Informationen enthält.
+    </p>
+
+    <h3>Was die App NICHT nutzt</h3>
+    <ul class="checklist">
+      <li><span class="icon no">✗</span> Google Analytics oder andere Tracking-Dienste</li>
+      <li><span class="icon no">✗</span> Werbung (AdMob, etc.)</li>
+      <li><span class="icon no">✗</span> Kamera oder Mikrofon</li>
+      <li><span class="icon no">✗</span> Standort (GPS)</li>
+      <li><span class="icon no">✗</span> Kontakte oder Kalender</li>
+      <li><span class="icon no">✗</span> Google Play Games / Google-Login</li>
+      <li><span class="icon no">✗</span> In-App-Käufe</li>
+      <li><span class="icon no">✗</span> Push-Benachrichtigungen</li>
+      <li><span class="icon no">✗</span> Werbe-IDs (IDFA, GAID)</li>
+      <li><span class="icon no">✗</span> Crash-Reporting-Dienste (Firebase Crashlytics o. Ä.)</li>
+    </ul>
+  </section>
+
+  <!-- 3 Lokaler Speicher -->
+  <section id="s3">
+    <h2><span class="num">3</span> Lokaler Speicher (nur auf deinem Gerät)</h2>
+    <p>
+      Die App speichert folgende Daten lokal auf deinem Gerät (Android SharedPreferences / Unity PlayerPrefs).
+      Diese Daten verlassen dein Gerät niemals und werden nicht an uns übermittelt:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Gespeicherte Information</th><th>Zweck</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Persönlicher Highscore</td><td>Bestpunktzahl anzeigen</td></tr>
+          <tr><td>Ausgewählte Tageszeit (Morgen/Mittag/Abend/Nacht)</td><td>Hintergrundthema speichern</td></tr>
+          <tr><td>Lautstärke-Einstellung</td><td>Audio-Präferenz merken</td></tr>
+          <tr><td>Vibration an/aus</td><td>Haptisches-Feedback-Präferenz</td></tr>
+          <tr><td>Kopie des Nicknames</td><td>Ranglisten-Formular vorausfüllen</td></tr>
+          <tr><td>Firebase Push-ID des eigenen Eintrags</td><td>Bestehenden Eintrag bei Score-Verbesserung aktualisieren</td></tr>
+          <tr><td>Zuletzt gesendeter Score</td><td>Unnötige Server-Anfragen vermeiden</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Diese lokalen Daten kannst du jederzeit löschen, indem du die App-Daten in den Android-Einstellungen
+      löschst (Einstellungen → Apps → Tauben Merge → Speicher → Daten löschen).
+    </p>
+  </section>
+
+  <!-- 4 Berechtigungen -->
+  <section id="s4">
+    <h2><span class="num">4</span> App-Berechtigungen</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Berechtigung</th><th>Zweck</th><th>Sensibel?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>INTERNET</code></td>
+            <td>Rangliste abrufen und übermitteln (Firebase)</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td><code>VIBRATE</code></td>
+            <td>Haptisches Feedback während des Spiels (im Spiel abschaltbar)</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td><code>WAKE_LOCK</code></td>
+            <td>Bildschirm während des Spielens anlassen (automatisch durch Unity Engine)</td>
+            <td>Normal</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Es werden keine datenschutzsensiblen Berechtigungen (Kamera, Mikrofon, Standort, Kontakte etc.) benötigt
+      oder angefragt.
+    </p>
+  </section>
+
+  <!-- 5 Zweck -->
+  <section id="s5">
+    <h2><span class="num">5</span> Zweck der Datenverarbeitung</h2>
+    <p>Die erhobenen Ranglisten-Daten (Nickname + Score) werden ausschließlich für folgende Zwecke genutzt:</p>
+    <ul>
+      <li><strong>Bereitstellung der öffentlichen Rangliste</strong> – Anzeige der besten Highscores aller
+        Teilnehmer innerhalb der App</li>
+      <li><strong>Aktualisierung des eigenen Eintrags</strong> – Wenn du einen höheren Score erzielst,
+        wird dein bestehender Eintrag überschrieben (kein doppelter Eintrag)</li>
+    </ul>
+    <p>Eine Nutzung für Werbung, Profiling, Tracking oder sonstige Zwecke findet nicht statt.</p>
+  </section>
+
+  <!-- 6 Rechtsgrundlage -->
+  <section id="s6">
+    <h2><span class="num">6</span> Rechtsgrundlage (DSGVO)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Verarbeitung</th><th>Rechtsgrundlage</th><th>Erläuterung</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rangliste (Nickname + Score)</td>
+            <td>Art. 6 Abs. 1 lit. a DSGVO<br><em>(Einwilligung)</em></td>
+            <td>Du entscheidest freiwillig, ob du teilnimmst. Die Einwilligung kann jederzeit widerrufen
+              werden (Abschnitt 14).</td>
+          </tr>
+          <tr>
+            <td>Lokaler Speicher (PlayerPrefs)</td>
+            <td>Art. 6 Abs. 1 lit. f DSGVO<br><em>(Berechtigtes Interesse)</em></td>
+            <td>Technisch notwendig für die Spielfunktion (Einstellungen speichern). Daten verlassen das
+              Gerät nicht.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7 Firebase -->
+  <section id="s7">
+    <h2><span class="num">7</span> Drittanbieter: Google Firebase</h2>
+    <p>
+      Für die Rangliste nutzen wir <strong>Firebase Realtime Database</strong>, einen Dienst der Google LLC
+      (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA) bzw. deren europäischer Tochtergesellschaft
+      <strong>Google Ireland Limited</strong> (Gordon House, Barrow Street, Dublin 4, Irland).
+    </p>
+
+    <h3>Technische Details</h3>
+    <ul>
+      <li>Datenbankregion: <strong>europe-west1 (Belgien, EU)</strong> – Daten werden physisch in der EU gespeichert</li>
+      <li>Verbindung: HTTPS (TLS-verschlüsselt)</li>
+      <li>Kein Firebase SDK eingebunden – nur direkte HTTP-Anfragen (UnityWebRequest)</li>
+      <li>Kein Firebase Authentication, kein Analytics, kein Crashlytics</li>
+    </ul>
+
+    <h3>Datenschutzinformationen von Google</h3>
+    <ul>
+      <li>Datenschutzerklärung Google: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a></li>
+      <li>Firebase Datenschutz: <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">firebase.google.com/support/privacy</a></li>
+      <li>Google Cloud Datenverarbeitung (DPA): <a href="https://cloud.google.com/terms/data-processing-addendum" target="_blank" rel="noopener noreferrer">cloud.google.com/terms/data-processing-addendum</a></li>
+    </ul>
+
+    <p>
+      Google ist im Rahmen des EU-US Data Privacy Framework zertifiziert und verarbeitet Daten gemäß
+      Standardvertragsklauseln der EU-Kommission (SCCs).
+    </p>
+  </section>
+
+  <!-- 8 Drittland-Transfer -->
+  <section id="s8">
+    <h2><span class="num">8</span> Datentransfer in Drittländer</h2>
+    <p>
+      Obwohl die Firebase-Datenbank physisch in der EU (Belgien) gehostet wird, ist Google LLC ein
+      US-amerikanisches Unternehmen. Es ist möglich, dass Google als Muttergesellschaft unter bestimmten
+      Umständen auf Daten zugreifen kann (z. B. im Rahmen des US CLOUD Act).
+    </p>
+    <p>
+      Google ist seit Juli 2023 unter dem <strong>EU-US Data Privacy Framework (DPF)</strong> zertifiziert,
+      was einen angemessenen Schutz im Sinne von Art. 45 DSGVO darstellt. Darüber hinaus nutzt Google
+      <strong>EU-Standardvertragsklauseln (SCCs)</strong> gemäß Art. 46 Abs. 2 lit. c DSGVO als
+      zusätzliche Schutzmaßnahme.
+    </p>
+    <p>
+      Weitere Informationen zu Transfers: <a href="https://business.safety.google/intl/de/adsprocessorterms/" target="_blank" rel="noopener noreferrer">business.safety.google</a>
+    </p>
+  </section>
+
+  <!-- 9 Datenweitergabe -->
+  <section id="s9">
+    <h2><span class="num">9</span> Datenweitergabe und -verkauf</h2>
+    <ul class="checklist">
+      <li><span class="icon no">✗</span> <strong>Kein Verkauf von Daten</strong> – Deine Daten werden niemals verkauft</li>
+      <li><span class="icon no">✗</span> <strong>Kein Tracking/Werbung</strong> – Deine Daten werden nicht für Werbezwecke oder Profiling genutzt</li>
+      <li><span class="icon no">✗</span> <strong>Keine weiteren Empfänger</strong> – außer Google Firebase als technischer Infrastrukturdienstleister</li>
+      <li><span class="icon yes">✓</span> <strong>Öffentliche Rangliste</strong> – Nickname und Score sind für alle App-Nutzer in der Rangliste sichtbar (wenn du freiwillig teilnimmst)</li>
+    </ul>
+    <p>
+      Eine Weitergabe an Strafverfolgungsbehörden erfolgt nur dann, wenn wir gesetzlich dazu verpflichtet sind.
+    </p>
+  </section>
+
+  <!-- 10 Löschung -->
+  <section id="s10">
+    <h2><span class="num">10</span> Datenspeicherung und Löschung</h2>
+
+    <h3>Ranglisten-Daten (Firebase)</h3>
+    <p>
+      Dein Ranglisten-Eintrag (Nickname + Score) bleibt so lange gespeichert, bis du die Löschung beantragst
+      oder die Rangliste abgeschaltet wird. Es gibt keine automatische Löschung nach einem bestimmten Zeitraum.
+    </p>
+    <p>
+      <strong>Löschung beantragen:</strong> Sende eine E-Mail an
+      <a href="mailto:vogelverschmelzung@gmail.com">vogelverschmelzung@gmail.com</a> mit dem Betreff
+      „Datenlöschung Rangliste" und deinem verwendeten Nickname. Wir löschen deinen Eintrag innerhalb von
+      <strong>14 Tagen</strong>.
+    </p>
+
+    <h3>Lokale Daten (PlayerPrefs)</h3>
+    <p>
+      Diese werden gelöscht, wenn du in den Android-Einstellungen die App-Daten löschst oder die App
+      deinstallierst.
+    </p>
+  </section>
+
+  <!-- 11 Sicherheit -->
+  <section id="s11">
+    <h2><span class="num">11</span> Datensicherheit</h2>
+    <ul>
+      <li>Alle Verbindungen zur Firebase-Datenbank sind <strong>TLS/HTTPS-verschlüsselt</strong></li>
+      <li>Firebase Security Rules begrenzen, was geschrieben werden kann:
+        Nicknames müssen 2–20 Zeichen haben, Scores müssen numerisch und im gültigen Bereich liegen</li>
+      <li>Es wurde <strong>kein Firebase SDK</strong> eingebunden – die Angriffsfläche ist minimal</li>
+      <li>Keine Passwörter oder sensiblen Daten werden verarbeitet oder gespeichert</li>
+    </ul>
+    <p>
+      Bitte beachte, dass keine Übertragung über das Internet oder elektronische Speicherung 100 % sicher ist.
+      Wir unternehmen jedoch alle angemessenen Maßnahmen, um deine Daten zu schützen.
+    </p>
+  </section>
+
+  <!-- 12 Kinder -->
+  <section id="s12">
+    <h2><span class="num">12</span> Kinder und Jugendliche</h2>
+    <p>
+      Tauben Merge ist für alle Altersgruppen geeignet (Google Play: USK 0 / Everyone).
+      Wir nehmen den Schutz von Minderjährigen besonders ernst.
+    </p>
+    <ul>
+      <li>Das Spiel erfordert <strong>keine Registrierung</strong> und ist ohne Dateneingabe vollständig nutzbar</li>
+      <li>Die Ranglisten-Teilnahme ist <strong>freiwillig</strong> und erfordert nur einen Nickname – keinen echten Namen</li>
+      <li>Wir erheben wissentlich keine personenbezogenen Daten von Kindern unter 13 Jahren über die
+        freiwillige Rangliste hinaus</li>
+      <li>Eltern/Erziehungsberechtigte können uns unter
+        <a href="mailto:vogelverschmelzung@gmail.com">vogelverschmelzung@gmail.com</a> kontaktieren,
+        wenn sie der Meinung sind, dass ihr Kind uns Daten ohne Zustimmung übermittelt hat.
+        Wir löschen diese Daten umgehend.</li>
+    </ul>
+    <p>
+      Für Kinder unter 16 Jahren in Deutschland gilt: Sofern die Ranglisten-Einwilligung von Kindern
+      unter 16 Jahren erteilt wurde, sollten Eltern/Erziehungsberechtigte dies begleiten (§ 8 DSGVO i.V.m.
+      § 8 BDSG).
+    </p>
+  </section>
+
+  <!-- 13 Rechte -->
+  <section id="s13">
+    <h2><span class="num">13</span> Deine Rechte nach DSGVO</h2>
+    <p>
+      Als betroffene Person hast du folgende Rechte gemäß DSGVO (Art. 15–21), die du jederzeit
+      gegenüber uns geltend machen kannst:
+    </p>
+    <div class="rights-grid">
+      <div class="right-card">
+        <strong>Auskunft (Art. 15)</strong>
+        <span>Erfahre, welche Daten wir über dich gespeichert haben.</span>
+      </div>
+      <div class="right-card">
+        <strong>Berichtigung (Art. 16)</strong>
+        <span>Lass unrichtige Daten korrigieren.</span>
+      </div>
+      <div class="right-card">
+        <strong>Löschung (Art. 17)</strong>
+        <span>Verlange die Löschung deiner Daten (Recht auf Vergessenwerden).</span>
+      </div>
+      <div class="right-card">
+        <strong>Einschränkung (Art. 18)</strong>
+        <span>Verlange die eingeschränkte Verarbeitung deiner Daten.</span>
+      </div>
+      <div class="right-card">
+        <strong>Datenübertragbarkeit (Art. 20)</strong>
+        <span>Erhalte deine Daten in einem gängigen, maschinenlesbaren Format.</span>
+      </div>
+      <div class="right-card">
+        <strong>Widerspruch (Art. 21)</strong>
+        <span>Widerspreche der Verarbeitung deiner Daten.</span>
+      </div>
+      <div class="right-card">
+        <strong>Widerruf der Einwilligung</strong>
+        <span>Du kannst deine Einwilligung zur Rangliste jederzeit widerrufen.</span>
+      </div>
+      <div class="right-card">
+        <strong>Beschwerde (Art. 77)</strong>
+        <span>Lege bei einer Datenschutzaufsichtsbehörde Beschwerde ein.</span>
+      </div>
+    </div>
+
+    <h3>Zuständige Aufsichtsbehörde</h3>
+    <p>
+      Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde zu beschweren, insbesondere
+      in dem EU-Mitgliedstaat deines gewöhnlichen Aufenthalts, deines Arbeitsplatzes oder des Orts des
+      mutmaßlichen Verstoßes.
+    </p>
+    <p>
+      Für Deutschland ist der <strong>Bundesbeauftragte für den Datenschutz und die Informationsfreiheit (BfDI)</strong>
+      zuständig:
+    </p>
+    <div class="contact-card">
+      <p>Bundesbeauftragter für den Datenschutz und die Informationsfreiheit</p>
+      <p>Graurheindorfer Str. 153, 53117 Bonn</p>
+      <p>Web: <a href="https://www.bfdi.bund.de" target="_blank" rel="noopener noreferrer">www.bfdi.bund.de</a></p>
+    </div>
+    <p style="margin-top:12px; font-size:.9rem; color:var(--muted);">
+      Je nach Bundesland kann auch die zuständige Landesdatenschutzbehörde angerufen werden.
+    </p>
+  </section>
+
+  <!-- 14 Kontakt -->
+  <section id="s14">
+    <h2><span class="num">14</span> Kontakt und Widerruf der Einwilligung</h2>
+    <p>
+      Für alle datenschutzbezogenen Anfragen – Auskunft, Löschung, Widerruf der Ranglisten-Einwilligung,
+      Fragen oder Beschwerden – wende dich bitte an:
+    </p>
+    <div class="contact-card">
+      <p><strong>Ben Max (Smikra)</strong></p>
+      <p>E-Mail: <a href="mailto:vogelverschmelzung@gmail.com">vogelverschmelzung@gmail.com</a></p>
+      <p style="margin-top:10px; font-size:.9rem; color:var(--muted);">
+        Bitte nenne in deiner E-Mail: deinen verwendeten Nickname und dein Anliegen.<br>
+        Wir bearbeiten deine Anfrage innerhalb von <strong>14 Tagen</strong>.
+      </p>
+    </div>
+
+    <h3>Widerruf der Ranglisten-Einwilligung</h3>
+    <p>
+      Du kannst deine Einwilligung zur Speicherung deiner Daten in der Rangliste jederzeit
+      ohne Angabe von Gründen widerrufen, indem du uns eine E-Mail mit deinem Nickname und dem Betreff
+      „Widerruf Rangliste" sendest. Der Widerruf berührt nicht die Rechtmäßigkeit der bis dahin
+      erfolgten Verarbeitung (Art. 7 Abs. 3 DSGVO).
+    </p>
+  </section>
+
+  <!-- 15 Änderungen -->
+  <section id="s15">
+    <h2><span class="num">15</span> Änderungen dieser Datenschutzerklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung gelegentlich aktualisieren, um Änderungen in der App,
+      neue gesetzliche Anforderungen oder veränderte Verarbeitungspraktiken zu reflektieren.
+      Wesentliche Änderungen werden durch ein aktualisiertes Datum am Anfang dieser Seite kenntlich gemacht.
+    </p>
+    <p>
+      Wir empfehlen dir, diese Seite regelmäßig auf Aktualisierungen zu überprüfen.
+      Die fortgesetzte Nutzung der App nach einer Änderung stellt keine Einwilligung in die geänderten
+      Bedingungen dar – für einwilligungsbedürftige Verarbeitungen holen wir eine neue Einwilligung ein.
+    </p>
+    <p>
+      <strong>Aktuelle Version:</strong> 1.0 &nbsp;|&nbsp; <strong>Stand:</strong> Juni 2026
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Ben Max (Smikra) – Tauben Merge</p>
+  <p style="margin-top:6px;">
+    Diese Datenschutzerklärung wurde gemäß DSGVO, BDSG und den Anforderungen des Google Play Stores erstellt.
+  </p>
+</footer>
+
+</body>
+</html>
