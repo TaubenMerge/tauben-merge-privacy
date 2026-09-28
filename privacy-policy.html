@@ -206,7 +206,7 @@
 <header>
   <div class="dove">🕊️</div>
   <h1>Datenschutzerklärung</h1>
-  <p>Bird Merge &nbsp;|&nbsp; Version 1.02 &nbsp;|&nbsp; Stand: September 2026</p>
+  <p>Bird Merge &nbsp;|&nbsp; Version 1.03 &nbsp;|&nbsp; Stand: September 2026</p>
 </header>
 
 <main>
@@ -230,7 +230,7 @@
       <li><a href="#s3">Lokaler Speicher (nur auf deinem Gerät)</a></li>
       <li><a href="#s4">App-Berechtigungen</a></li>
       <li><a href="#s5">Zweck der Verarbeitung</a></li>
-      <li><a href="#s6">Rechtsgrundlage (DSGVO)</a></li>
+      <li><a href="#s6">Rechtsgrundlage (DSGVO, TDDDG)</a></li>
       <li><a href="#s7">Drittanbieter: Google Firebase</a></li>
       <li><a href="#s7b">Werbung: Google AdMob</a></li>
       <li><a href="#s7c">Nutzungsstatistik: Unity Analytics</a></li>
@@ -351,7 +351,8 @@
   <section id="s3">
     <h2><span class="num">3</span> Lokaler Speicher (nur auf deinem Gerät)</h2>
     <p>
-      Die App speichert folgende Daten lokal auf deinem Gerät (Android SharedPreferences / Unity PlayerPrefs).
+      Die App speichert folgende Daten lokal auf deinem Gerät (Unity PlayerPrefs – unter Android in den
+      SharedPreferences, unter iOS in den NSUserDefaults).
       Diese Daten verlassen dein Gerät niemals und werden nicht an uns übermittelt:
     </p>
     <div class="table-wrap">
@@ -373,15 +374,22 @@
         </tbody>
       </table>
     </div>
-    <p>
-      Diese lokalen Daten kannst du jederzeit löschen, indem du die App-Daten in den Android-Einstellungen
-      löschst (Einstellungen → Apps → Bird Merge → Speicher → Daten löschen) oder die App deinstallierst.
-    </p>
+    <p>Diese lokalen Daten kannst du jederzeit löschen:</p>
+    <ul>
+      <li><strong>Android:</strong> Einstellungen → Apps → Bird Merge → Speicher → Daten löschen,
+        oder die App deinstallieren</li>
+      <li><strong>iOS:</strong> Einstellungen → Allgemein → iPhone-Speicher → Bird Merge → App löschen
+        (iOS bietet kein separates Löschen der App-Daten)</li>
+    </ul>
   </section>
 
   <!-- 4 Berechtigungen -->
   <section id="s4">
     <h2><span class="num">4</span> App-Berechtigungen</h2>
+    <p>
+      Die Tabelle zeigt die unter Android deklarierten Berechtigungen. Unter iOS fragt die App zusätzlich
+      die Erlaubnis zur Nachverfolgung (App Tracking Transparency) ab – siehe Abschnitte 6 und 7c.
+    </p>
     <div class="table-wrap">
       <table>
         <thead>
@@ -462,7 +470,7 @@
 
   <!-- 6 Rechtsgrundlage -->
   <section id="s6">
-    <h2><span class="num">6</span> Rechtsgrundlage (DSGVO)</h2>
+    <h2><span class="num">6</span> Rechtsgrundlage (DSGVO, TDDDG)</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -477,13 +485,15 @@
           </tr>
           <tr>
             <td>Lokaler Speicher (PlayerPrefs)</td>
-            <td>Art. 6 Abs. 1 lit. f DSGVO<br><em>(Berechtigtes Interesse)</em></td>
+            <td>Art. 6 Abs. 1 lit. f DSGVO<br><em>(Berechtigtes Interesse)</em><br>
+              § 25 Abs. 2 Nr. 2 TDDDG</td>
             <td>Technisch notwendig für die Spielfunktion (Einstellungen speichern). Daten verlassen das
               Gerät nicht.</td>
           </tr>
           <tr>
             <td>Personalisierte Werbung (Werbe-ID)</td>
-            <td>Art. 6 Abs. 1 lit. a DSGVO<br><em>(Einwilligung)</em></td>
+            <td>Art. 6 Abs. 1 lit. a DSGVO<br><em>(Einwilligung)</em><br>
+              § 25 Abs. 1 TDDDG</td>
             <td>Wird über Googles Einwilligungsformular eingeholt und kann jederzeit über
               <em>Einstellungen → Datenschutz-Optionen</em> widerrufen werden.</td>
           </tr>
@@ -494,7 +504,8 @@
           </tr>
           <tr>
             <td>Nutzungsstatistik (Unity Analytics)</td>
-            <td>Art. 6 Abs. 1 lit. a DSGVO<br><em>(Einwilligung)</em></td>
+            <td>Art. 6 Abs. 1 lit. a DSGVO<br><em>(Einwilligung)</em><br>
+              § 25 Abs. 1 TDDDG</td>
             <td>Wird gemeinsam mit der Werbe-Einwilligung eingeholt; auf iOS zusätzlich über die
               System-Abfrage zur Nachverfolgung (ATT).</td>
           </tr>
@@ -506,6 +517,13 @@
         </tbody>
       </table>
     </div>
+    <p>
+      § 25 des Telekommunikation-Digitale-Dienste-Datenschutz-Gesetzes (TDDDG) regelt zusätzlich, wann
+      Informationen auf deinem Gerät gespeichert oder von dort ausgelesen werden dürfen. Für die
+      Spieleinstellungen ist das ohne Einwilligung erlaubt, weil die App ohne sie nicht wie gewünscht
+      funktioniert (Abs. 2 Nr. 2). Das Auslesen der Werbe-Kennung und die Installations-Kennung von
+      Unity Analytics erfolgen nur mit deiner Einwilligung (Abs. 1).
+    </p>
   </section>
 
   <!-- 7 Firebase -->
@@ -726,8 +744,8 @@
 
     <h3>Lokale Daten (PlayerPrefs)</h3>
     <p>
-      Diese werden gelöscht, wenn du in den Android-Einstellungen die App-Daten löschst oder die App
-      deinstallierst.
+      Diese werden gelöscht, wenn du die App-Daten löschst oder die App deinstallierst (Anleitung für
+      Android und iOS in Abschnitt 3).
     </p>
   </section>
 
@@ -767,9 +785,10 @@
         Wir löschen diese Daten umgehend.</li>
     </ul>
     <p>
-      Für Kinder unter 16 Jahren in Deutschland gilt: Sofern die Ranglisten-Einwilligung von Kindern
-      unter 16 Jahren erteilt wurde, sollten Eltern/Erziehungsberechtigte dies begleiten (§ 8 DSGVO i.V.m.
-      § 8 BDSG).
+      Für Jugendliche unter 16 Jahren gilt in Deutschland: Eine Einwilligung – zur Rangliste, zu
+      personalisierter Werbung oder zur Nutzungsstatistik – ist nur wirksam, wenn die
+      Eltern/Erziehungsberechtigten sie erteilen oder ihr zustimmen (Art. 8 DSGVO). Bist du jünger als 16,
+      frag bitte deine Eltern, bevor du zustimmst, oder lehne ab – das Spiel bleibt vollständig nutzbar.
     </p>
   </section>
 
@@ -807,7 +826,7 @@
       </div>
       <div class="right-card">
         <strong>Widerruf der Einwilligung</strong>
-        <span>Du kannst deine Einwilligung zur Rangliste jederzeit widerrufen.</span>
+        <span>Widerrufe jede erteilte Einwilligung jederzeit für die Zukunft (Art. 7 Abs. 3) – siehe Abschnitt 14.</span>
       </div>
       <div class="right-card">
         <strong>Beschwerde (Art. 77)</strong>
@@ -822,16 +841,15 @@
       mutmaßlichen Verstoßes.
     </p>
     <p>
-      Für Deutschland ist der <strong>Bundesbeauftragte für den Datenschutz und die Informationsfreiheit (BfDI)</strong>
-      zuständig:
+      Für uns als Anbieter mit Sitz in Nordrhein-Westfalen ist die folgende Aufsichtsbehörde zuständig:
     </p>
     <div class="contact-card">
-      <p>Bundesbeauftragter für den Datenschutz und die Informationsfreiheit</p>
-      <p>Graurheindorfer Str. 153, 53117 Bonn</p>
-      <p>Web: <a href="https://www.bfdi.bund.de" target="_blank" rel="noopener noreferrer">www.bfdi.bund.de</a></p>
+      <p>Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW)</p>
+      <p>Kavalleriestraße 2–4, 40213 Düsseldorf</p>
+      <p>Web: <a href="https://www.ldi.nrw.de" target="_blank" rel="noopener noreferrer">www.ldi.nrw.de</a></p>
     </div>
     <p style="margin-top:12px; font-size:.9rem; color:var(--muted);">
-      Je nach Bundesland kann auch die zuständige Landesdatenschutzbehörde angerufen werden.
+      Du kannst dich aber auch an jede andere Aufsichtsbehörde wenden, etwa die deines Bundeslands.
     </p>
   </section>
 
@@ -889,7 +907,7 @@
       Bedingungen dar – für einwilligungsbedürftige Verarbeitungen holen wir eine neue Einwilligung ein.
     </p>
     <p>
-      <strong>Aktuelle Version:</strong> 1.02 &nbsp;|&nbsp; <strong>Stand:</strong> September 2026
+      <strong>Aktuelle Version:</strong> 1.03 &nbsp;|&nbsp; <strong>Stand:</strong> September 2026
     </p>
   </section>
 
@@ -898,7 +916,8 @@
 <footer>
   <p>© 2026 Maximilian Schmidt (smikra) – Bird Merge</p>
   <p style="margin-top:6px;">
-    Diese Datenschutzerklärung wurde gemäß DSGVO, BDSG und den Anforderungen des Google Play Stores erstellt.
+    Diese Datenschutzerklärung wurde gemäß DSGVO, BDSG, TDDDG und den Anforderungen von Google Play und dem
+    Apple App Store erstellt.
   </p>
 </footer>
 
