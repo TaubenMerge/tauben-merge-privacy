@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'app.autospiegel'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.autospiegel'
+        // Old head units often still run Android 4.x, so keep this low.
+        minSdk 16
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    signingConfigs {
+        // Not a secret: a fixed key so that every build can update an installed copy.
+        shared {
+            storeFile rootProject.file('signing/autospiegel.keystore')
+            storePassword 'autospiegel'
+            keyAlias 'autospiegel'
+            keyPassword 'autospiegel'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.shared
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.shared
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}

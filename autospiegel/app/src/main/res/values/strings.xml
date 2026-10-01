@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoSpiegel</string>
+
+    <!-- Start / mode chooser -->
+    <string name="start_title">Willkommen bei AutoSpiegel</string>
+    <string name="start_text">Installiere diese App auf dem Handy UND auf dem Autoradio. Das Handy schickt sein Bild per WLAN ans Radio, und du bedienst das Handy über den Bildschirm im Auto.\n\nWas ist dieses Gerät?</string>
+    <string name="start_phone">Das ist mein Handy</string>
+    <string name="start_radio">Das ist das Autoradio</string>
+    <string name="start_phone_too_old">Für den Handy-Modus braucht das Gerät mindestens Android 7.</string>
+    <string name="switch_mode">Modus wechseln</string>
+
+    <!-- Phone screen -->
+    <string name="phone_title">AutoSpiegel – Handy</string>
+    <string name="phone_step_control">1. Bedienung vom Radio erlauben</string>
+    <string name="phone_step_control_text">Damit du das Handy über den Bildschirm im Auto steuern kannst: Öffne die Bedienungshilfen, tippe auf »AutoSpiegel« und schalte es ein.\n\nIst der Schalter gesperrt (»Eingeschränkte Einstellung«)? Dann öffne die App-Info, tippe oben rechts auf ⋮ → »Eingeschränkte Einstellungen zulassen« und versuche es noch einmal.</string>
+    <string name="phone_open_accessibility">Bedienungshilfen öffnen</string>
+    <string name="phone_open_app_info">App-Info öffnen</string>
+    <string name="phone_control_on">✓ Bedienung ist erlaubt</string>
+    <string name="phone_control_off">✗ Bedienung ist noch nicht erlaubt</string>
+    <string name="phone_step_code">2. Radio-Code eingeben</string>
+    <string name="phone_step_code_text">Das Radio zeigt einen 6-stelligen Code an. Gib ihn hier einmal ein – danach verbinden sich die beiden automatisch, und kein fremdes Gerät kann dein Handy sehen.</string>
+    <string name="phone_code_hint">Code vom Radio</string>
+    <string name="phone_code_save">Speichern</string>
+    <string name="phone_code_saved">Code gespeichert</string>
+    <string name="phone_code_invalid">Der Code hat genau 6 Ziffern</string>
+    <string name="phone_step_landscape">3. Querformat (empfohlen)</string>
+    <string name="phone_landscape_check">Handy beim Spiegeln ins Querformat drehen, damit das Bild den Radio-Bildschirm füllt</string>
+    <string name="phone_overlay_button">Erlaubnis »Über anderen Apps einblenden«</string>
+    <string name="phone_overlay_on">✓ Erlaubnis ist erteilt</string>
+    <string name="phone_overlay_off">✗ Für das Querformat fehlt noch die Erlaubnis</string>
+    <string name="phone_start">Spiegeln starten</string>
+    <string name="phone_stop">Spiegeln beenden</string>
+    <string name="phone_howto_title">So verbindest du Handy und Radio</string>
+    <string name="phone_howto_text">• Schalte am Handy den WLAN-Hotspot ein und verbinde das Radio damit (oder beide mit demselben WLAN).\n• Ton und Telefonate laufen wie gewohnt über Bluetooth – koppel das Handy einfach per Bluetooth mit dem Radio.\n• Das Handy-Display bleibt beim Spiegeln an (gedimmt). Am besten das Handy dabei laden.</string>
+    <string name="phone_apk_title">App aufs Radio bringen</string>
+    <string name="phone_apk_text">Während das Spiegeln läuft, kann das Radio die App direkt von diesem Handy laden: Radio mit dem Hotspot verbinden, im Browser des Radios diese Adresse öffnen und die Datei installieren:</string>
+    <string name="phone_apk_none">(Erst Spiegeln starten und Hotspot/WLAN einschalten, dann erscheint hier die Adresse.)</string>
+
+    <!-- Phone status -->
+    <string name="status_stopped">Spiegeln ist aus.</string>
+    <string name="status_waiting">Bereit – warte auf das Radio …</string>
+    <string name="status_connected">Verbunden mit %1$s</string>
+    <string name="status_wrong_code">%1$s möchte sich verbinden. Gib unten den Code ein, den das Radio anzeigt.</string>
+    <string name="status_error">Fehler: %1$s</string>
+
+    <!-- Notification -->
+    <string name="channel_name">Spiegeln</string>
+    <string name="notification_title">AutoSpiegel läuft</string>
+    <string name="notification_text">Dein Bildschirm wird ans Autoradio geschickt.</string>
+    <string name="notification_stop">Beenden</string>
+
+    <!-- Accessibility service -->
+    <string name="a11y_description">Erlaubt AutoSpiegel, Berührungen vom Autoradio-Bildschirm auf diesem Handy auszuführen (Tippen, Wischen, Zurück, Home). Es werden keine Inhalte gelesen oder gespeichert.</string>
+
+    <!-- Radio screen -->
+    <string name="radio_searching">Suche Handy …\n\n1. Am Handy den WLAN-Hotspot einschalten und dieses Radio damit verbinden.\n2. Am Handy AutoSpiegel öffnen und »Spiegeln starten« tippen.\n\nRadio-Code: %1$s\nRadio-IP: %2$s</string>
+    <string name="radio_pair">Neues Handy gefunden!\n\nGib in der AutoSpiegel-App auf dem Handy diesen Radio-Code ein:\n\n%1$s</string>
+    <string name="radio_connected">Verbunden mit %1$s – warte auf Bild …</string>
+    <string name="radio_no_control">Hinweis: Am Handy ist die Bedienung noch nicht erlaubt (AutoSpiegel → Schritt 1).</string>
+    <string name="radio_decoder_error">Das Radio kann das Video nicht abspielen: %1$s</string>
+    <string name="radio_no_ip">keine (WLAN aus?)</string>
+    <string name="radio_menu_title">Einstellungen</string>
+    <string name="radio_menu_code">Radio-Code: %1$s\n(einmal in der Handy-App eingeben)</string>
+    <string name="radio_menu_ip_hint">Handy-IP (nur falls nötig, sonst leer)</string>
+    <string name="radio_menu_save">Speichern</string>
+    <string name="radio_menu_close">Schließen</string>
+    <string name="radio_back">Zurück</string>
+    <string name="radio_home">Startbildschirm</string>
+    <string name="radio_recents">Letzte Apps</string>
+    <string name="radio_menu">Menü</string>
+</resources>
