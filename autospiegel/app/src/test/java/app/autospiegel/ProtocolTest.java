@@ -82,6 +82,28 @@ public class ProtocolTest {
         assertEquals(987654321L, p.readLong());
     }
 
+    @Test
+    public void controlStateRoundTrip() throws IOException {
+        ByteArrayOutputStream wire = new ByteArrayOutputStream();
+        Protocol.Writer writer = new Protocol.Writer(wire);
+        writer.send(Protocol.MSG_CONTROL_STATE, Protocol.controlState(false));
+        writer.send(Protocol.MSG_CONTROL_STATE, Protocol.controlState(true));
+        Protocol.Reader reader = new Protocol.Reader(new ByteArrayInputStream(wire.toByteArray()));
+        reader.next();
+        assertEquals(Protocol.MSG_CONTROL_STATE, reader.type);
+        assertEquals(0, reader.buffer[0]);
+        reader.next();
+        assertEquals(1, reader.buffer[0]);
+    }
+
+    @Test
+    public void portraitPhoneFillsTheRadioHeight() {
+        // Upright phone on a 1024x600 radio: tall and narrow, using the full height.
+        int[] size = MirrorService.fit(1080, 2400, 944, 600);
+        assertEquals(256, size[0]);
+        assertEquals(592, size[1]);
+    }
+
     @Test(expected = IOException.class)
     public void rejectsAbsurdLengths() throws IOException {
         byte[] bad = {Protocol.MSG_VIDEO_FRAME, 0x7f, 0, 0, 0};

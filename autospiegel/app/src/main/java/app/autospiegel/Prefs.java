@@ -11,6 +11,13 @@ final class Prefs {
     static final String MODE_PHONE = "phone";
     static final String MODE_RADIO = "radio";
 
+    /** Phone stays upright; the radio shows a narrow, tall picture. */
+    static final String ORIENTATION_PORTRAIT = "portrait";
+    /** Phone turns sideways; the picture fills the wide radio screen. */
+    static final String ORIENTATION_LANDSCAPE = "landscape";
+    /** Leave rotation to the phone. */
+    static final String ORIENTATION_FREE = "free";
+
     private final SharedPreferences sp;
 
     Prefs(Context context) {
@@ -37,12 +44,12 @@ final class Prefs {
         sp.edit().putString("trusted_code", code).apply();
     }
 
-    boolean forceLandscape() {
-        return sp.getBoolean("force_landscape", true);
+    String orientation() {
+        return sp.getString("orientation", ORIENTATION_PORTRAIT);
     }
 
-    void setForceLandscape(boolean value) {
-        sp.edit().putBoolean("force_landscape", value).apply();
+    void setOrientation(String orientation) {
+        sp.edit().putString("orientation", orientation).apply();
     }
 
     // Radio side

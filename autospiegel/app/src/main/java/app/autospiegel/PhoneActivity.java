@@ -15,9 +15,8 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,12 +99,22 @@ public class PhoneActivity extends Activity {
             }
         });
 
-        CheckBox landscape = (CheckBox) findViewById(R.id.landscape);
-        landscape.setChecked(prefs.forceLandscape());
-        landscape.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        RadioGroup orientation = (RadioGroup) findViewById(R.id.orientation);
+        String current = prefs.orientation();
+        orientation.check(Prefs.ORIENTATION_LANDSCAPE.equals(current) ? R.id.orientation_landscape
+                : Prefs.ORIENTATION_FREE.equals(current) ? R.id.orientation_free
+                : R.id.orientation_portrait);
+        orientation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton button, boolean checked) {
-                prefs.setForceLandscape(checked);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                prefs.setOrientation(checkedId == R.id.orientation_landscape
+                        ? Prefs.ORIENTATION_LANDSCAPE
+                        : checkedId == R.id.orientation_free
+                                ? Prefs.ORIENTATION_FREE : Prefs.ORIENTATION_PORTRAIT);
+                if (MirrorService.running) {
+                    startService(new Intent(PhoneActivity.this, MirrorService.class)
+                            .setAction(MirrorService.ACTION_ORIENTATION));
+                }
             }
         });
         findViewById(R.id.overlay_permission).setOnClickListener(new View.OnClickListener() {

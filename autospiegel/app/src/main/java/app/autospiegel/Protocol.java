@@ -43,6 +43,8 @@ final class Protocol {
     static final int MSG_KEYFRAME_REQUEST = 8;
     /** Both directions: keep-alive. */
     static final int MSG_PING = 9;
+    /** Phone to radio: whether touch control is enabled (sent when it changes). */
+    static final int MSG_CONTROL_STATE = 10;
 
     static final int TOUCH_DOWN = 0;
     static final int TOUCH_MOVE = 1;
@@ -147,6 +149,10 @@ final class Protocol {
             throw new AssertionError(e);
         }
         return p.bytes();
+    }
+
+    static byte[] controlState(boolean enabled) {
+        return new byte[] {(byte) (enabled ? 1 : 0)};
     }
 
     static byte[] touch(int action, int pointer, float x, float y, long time) {

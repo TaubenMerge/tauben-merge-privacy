@@ -40,8 +40,11 @@ Quellen erlauben.
      „App-Info öffnen“ → ⋮ oben rechts → „Eingeschränkte Einstellungen zulassen“
      und noch einmal versuchen.
    - **Radio-Code** eingeben → Speichern. Dadurch kann sich nur dein Radio verbinden.
-   - **Querformat:** Erlaubnis „Über anderen Apps einblenden“ geben. Dann dreht sich
-     das Handy beim Spiegeln ins Querformat, und das Bild füllt den Radio-Bildschirm.
+   - **Ausrichtung:** Standard ist **„Hochkant festhalten“**. Damit dreht sich das
+     Handy beim Spiegeln nicht, auch wenn es in der Halterung wackelt. Gib dafür die
+     Erlaubnis „Über anderen Apps einblenden“. Wer lieber ein größeres Bild auf dem
+     Radio möchte, wählt „Querformat“. Die Änderung gilt sofort, auch während des
+     Spiegelns.
 3. Handy und Radio per **Bluetooth** koppeln (für Musik und Anrufe), falls noch nicht
    geschehen.
 
@@ -57,6 +60,10 @@ Mit „Spiegeln beenden“ oder über die Benachrichtigung hörst du auf.
 
 ## Gut zu wissen
 
+- **Touch:** Solange am Handy die Bedienung noch nicht erlaubt ist, zeigt das Radio
+  unten einen gelben Hinweis. Ist er verschwunden, funktioniert Touch.
+- **Hochkant** füllt das Bild auf dem breiten Radio-Bildschirm nur die Höhe aus. Es
+  ist also schmal, links und rechts bleibt Schwarz. Mit „Querformat“ wird es größer.
 - **Wischen und Ziehen** werden ausgeführt, sobald du den Finger loslässt. Kurze
   Wischer fühlen sich normal an, langes Ziehen (z. B. eine Karte verschieben) kommt
   etwas verzögert an. Tippen geht sofort.

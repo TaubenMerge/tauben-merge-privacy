@@ -24,11 +24,14 @@
     <string name="phone_code_save">Speichern</string>
     <string name="phone_code_saved">Code gespeichert</string>
     <string name="phone_code_invalid">Der Code hat genau 6 Ziffern</string>
-    <string name="phone_step_landscape">3. Querformat (empfohlen)</string>
-    <string name="phone_landscape_check">Handy beim Spiegeln ins Querformat drehen, damit das Bild den Radio-Bildschirm füllt</string>
+    <string name="phone_step_orientation">3. Ausrichtung des Handys</string>
+    <string name="phone_orientation_portrait">Hochkant festhalten – das Handy dreht sich beim Spiegeln nicht</string>
+    <string name="phone_orientation_landscape">Querformat – das Bild auf dem Radio wird größer, das Handy dreht sich</string>
+    <string name="phone_orientation_free">Nicht festlegen – so, wie das Handy gerade steht</string>
+    <string name="phone_orientation_hint">Gilt sofort, auch während des Spiegelns. Zum Festhalten braucht AutoSpiegel diese Erlaubnis:</string>
     <string name="phone_overlay_button">Erlaubnis »Über anderen Apps einblenden«</string>
     <string name="phone_overlay_on">✓ Erlaubnis ist erteilt</string>
-    <string name="phone_overlay_off">✗ Für das Querformat fehlt noch die Erlaubnis</string>
+    <string name="phone_overlay_off">✗ Erlaubnis fehlt – ohne sie dreht sich das Handy, wie es will</string>
     <string name="phone_start">Spiegeln starten</string>
     <string name="phone_stop">Spiegeln beenden</string>
     <string name="phone_howto_title">So verbindest du Handy und Radio</string>
@@ -57,7 +60,7 @@
     <string name="radio_searching">Suche Handy …\n\n1. Am Handy den WLAN-Hotspot einschalten und dieses Radio damit verbinden.\n2. Am Handy AutoSpiegel öffnen und »Spiegeln starten« tippen.\n\nRadio-Code: %1$s\nRadio-IP: %2$s</string>
     <string name="radio_pair">Neues Handy gefunden!\n\nGib in der AutoSpiegel-App auf dem Handy diesen Radio-Code ein:\n\n%1$s</string>
     <string name="radio_connected">Verbunden mit %1$s – warte auf Bild …</string>
-    <string name="radio_no_control">Hinweis: Am Handy ist die Bedienung noch nicht erlaubt (AutoSpiegel → Schritt 1).</string>
+    <string name="radio_no_control">Touch ist noch aus: Am Handy in AutoSpiegel Schritt 1 »Bedienung erlauben« erledigen.</string>
     <string name="radio_decoder_error">Das Radio kann das Video nicht abspielen: %1$s</string>
     <string name="radio_no_ip">keine (WLAN aus?)</string>
     <string name="radio_menu_title">Einstellungen</string>

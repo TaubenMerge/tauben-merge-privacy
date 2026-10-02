@@ -33,8 +33,8 @@ final class RadioClient {
         /** Size of the incoming video. Called on a background thread. */
         void onVideoSize(int width, int height);
 
-        /** Phone connected but touch control is not enabled there yet. */
-        void onControlDisabled();
+        /** Whether the phone accepts touches. Reported as true again after a disconnect. */
+        void onControlState(boolean enabled);
 
         /** Pixel size of the area the video may use. */
         int[] videoAreaSize();
@@ -231,9 +231,7 @@ final class RadioClient {
                 prefs.setLastPhoneIp(host);
                 writer = w;
                 listener.onStatus(context.getString(R.string.radio_connected, phoneName));
-                if (!controlEnabled) {
-                    listener.onControlDisabled();
-                }
+                listener.onControlState(controlEnabled);
 
                 long lastPing = 0;
                 while (active) {
@@ -253,6 +251,8 @@ final class RadioClient {
                         listener.onVideoSize(width, height);
                         decoder.configure(width, height, csd);
                         listener.onStatus(null);
+                    } else if (reader.type == Protocol.MSG_CONTROL_STATE && reader.length >= 1) {
+                        listener.onControlState(reader.buffer[0] != 0);
                     }
                     long now = SystemClock.uptimeMillis();
                     if (now - lastPing > 2000) {
@@ -265,6 +265,7 @@ final class RadioClient {
             } finally {
                 writer = null;
                 Net.close(s);
+                listener.onControlState(true);
                 // After a quick stop/start a newer worker may already own the decoder.
                 Worker current = worker;
                 if (current == null || current == this) {

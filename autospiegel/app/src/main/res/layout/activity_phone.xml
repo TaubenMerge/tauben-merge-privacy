@@ -92,17 +92,41 @@
                 android:text="@string/phone_code_save" />
         </LinearLayout>
 
-        <!-- Step 3: landscape -->
+        <!-- Step 3: orientation -->
         <TextView
             style="@style/Heading"
-            android:text="@string/phone_step_landscape" />
+            android:text="@string/phone_step_orientation" />
 
-        <CheckBox
-            android:id="@+id/landscape"
+        <RadioGroup
+            android:id="@+id/orientation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_landscape_check"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/orientation_portrait"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_orientation_portrait"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/orientation_landscape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_orientation_landscape"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/orientation_free"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_orientation_free"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <TextView
+            style="@style/Body"
+            android:text="@string/phone_orientation_hint" />
 
         <TextView
             android:id="@+id/overlay_state"

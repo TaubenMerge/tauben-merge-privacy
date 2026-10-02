@@ -58,6 +58,8 @@ import java.nio.charset.Charset;
 public class MirrorService extends Service {
     static final String ACTION_START = "app.autospiegel.START";
     static final String ACTION_STOP = "app.autospiegel.STOP";
+    /** Re-applies the orientation setting while running. */
+    static final String ACTION_ORIENTATION = "app.autospiegel.ORIENTATION";
     static final String EXTRA_RESULT_CODE = "result_code";
     static final String EXTRA_RESULT_DATA = "result_data";
 
@@ -102,12 +104,16 @@ public class MirrorService extends Service {
         final int maxHeight;
         final GestureBuilder gestures = new GestureBuilder();
         volatile boolean closed;
+        /** Touch control state the radio was last told about. */
+        volatile boolean controlReported;
 
-        Session(Socket socket, Protocol.Writer writer, int maxWidth, int maxHeight) {
+        Session(Socket socket, Protocol.Writer writer, int maxWidth, int maxHeight,
+                boolean controlReported) {
             this.socket = socket;
             this.writer = writer;
             this.maxWidth = maxWidth;
             this.maxHeight = maxHeight;
+            this.controlReported = controlReported;
         }
 
         void close() {
@@ -132,6 +138,15 @@ public class MirrorService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null || ACTION_STOP.equals(intent.getAction())) {
             stopSelf();
+            return START_NOT_STICKY;
+        }
+        if (ACTION_ORIENTATION.equals(intent.getAction())) {
+            if (projection == null) {
+                stopSelf();
+            } else {
+                hideOrientationOverlay();
+                showOrientationOverlay();
+            }
             return START_NOT_STICKY;
         }
         if (projection != null) {
@@ -327,10 +342,10 @@ public class MirrorService extends Service {
                 setStatus(getString(R.string.status_wrong_code, radioName));
                 return;
             }
-            writer.send(Protocol.MSG_HELLO_OK,
-                    Protocol.helloOk(Build.MODEL, ControlService.isEnabled(this)));
+            boolean controlEnabled = ControlService.instance != null;
+            writer.send(Protocol.MSG_HELLO_OK, Protocol.helloOk(Build.MODEL, controlEnabled));
 
-            s = new Session(socket, writer, maxWidth, maxHeight);
+            s = new Session(socket, writer, maxWidth, maxHeight, controlEnabled);
             synchronized (sessionLock) {
                 if (session != null) {
                     session.close();
@@ -464,6 +479,12 @@ public class MirrorService extends Service {
             if (s != null) {
                 try {
                     s.writer.send(Protocol.MSG_PING, Protocol.EMPTY);
+                    // Lets the radio show a hint until touch control is switched on.
+                    boolean control = ControlService.instance != null;
+                    if (control != s.controlReported) {
+                        s.writer.send(Protocol.MSG_CONTROL_STATE, Protocol.controlState(control));
+                        s.controlReported = control;
+                    }
                 } catch (IOException e) {
                     s.close();
                 }
@@ -818,11 +839,21 @@ public class MirrorService extends Service {
     }
 
     /**
-     * An invisible 1×1 overlay that asks for landscape. The system then rotates every app, so
-     * the mirrored picture fills the wide radio screen.
+     * An invisible 1×1 overlay that requests an orientation. The system then shows every app
+     * that way: upright (the phone does not turn in its holder) or sideways (the picture fills
+     * the wide radio screen).
      */
     private void showOrientationOverlay() {
-        if (!prefs.forceLandscape() || !Settings.canDrawOverlays(this)) {
+        String orientation = prefs.orientation();
+        int requested;
+        if (Prefs.ORIENTATION_PORTRAIT.equals(orientation)) {
+            requested = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        } else if (Prefs.ORIENTATION_LANDSCAPE.equals(orientation)) {
+            requested = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+        } else {
+            return;
+        }
+        if (!Settings.canDrawOverlays(this)) {
             return;
         }
         WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -835,13 +866,13 @@ public class MirrorService extends Service {
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 PixelFormat.TRANSLUCENT);
         lp.gravity = Gravity.TOP | Gravity.START;
-        lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+        lp.screenOrientation = requested;
         View view = new View(this);
         try {
             wm.addView(view, lp);
             orientationView = view;
         } catch (RuntimeException e) {
-            Log.w(TAG, "Cannot force landscape", e);
+            Log.w(TAG, "Cannot set orientation", e);
         }
     }
 

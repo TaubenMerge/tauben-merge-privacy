@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /** Radio side: full-screen video of the phone plus Back / Home / Recents buttons. */
 public class RadioActivity extends Activity implements RadioClient.Listener {
@@ -31,6 +30,7 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
     private FrameLayout videoArea;
     private AspectSurfaceView videoView;
     private TextView statusView;
+    private TextView controlHint;
     private volatile int areaWidth;
     private volatile int areaHeight;
 
@@ -68,6 +68,17 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
         statusView.setPadding(dp(24), dp(24), dp(24), dp(24));
         videoArea.addView(statusView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        controlHint = new TextView(this);
+        controlHint.setText(R.string.radio_no_control);
+        controlHint.setTextColor(0xFF000000);
+        controlHint.setBackgroundColor(0xFFFFD54F);
+        controlHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        controlHint.setGravity(Gravity.CENTER);
+        controlHint.setPadding(dp(12), dp(10), dp(12), dp(10));
+        controlHint.setVisibility(View.GONE);
+        videoArea.addView(controlHint, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                Gravity.BOTTOM));
         root.addView(videoArea, new LinearLayout.LayoutParams(
                 0, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
         setContentView(root);
@@ -256,12 +267,11 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
     }
 
     @Override
-    public void onControlDisabled() {
+    public void onControlState(final boolean enabled) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(RadioActivity.this, R.string.radio_no_control, Toast.LENGTH_LONG)
-                        .show();
+                controlHint.setVisibility(enabled ? View.GONE : View.VISIBLE);
             }
         });
     }
