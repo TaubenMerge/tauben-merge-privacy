@@ -18,6 +18,10 @@
             android:textStyle="bold" />
 
         <TextView
+            style="@style/Body"
+            android:text="@string/phone_intro" />
+
+        <TextView
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,24 +39,24 @@
             android:text="@string/phone_start"
             android:textSize="19sp" />
 
-        <!-- Step 1: touch control -->
+        <!-- Step 1: notification access -->
         <TextView
             style="@style/Heading"
-            android:text="@string/phone_step_control" />
+            android:text="@string/phone_step_listener" />
 
         <TextView
             style="@style/Body"
-            android:text="@string/phone_step_control_text" />
+            android:text="@string/phone_step_listener_text" />
 
         <TextView
-            android:id="@+id/control_state"
+            android:id="@+id/listener_state"
             style="@style/State" />
 
         <Button
-            android:id="@+id/open_accessibility"
+            android:id="@+id/open_listener"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/phone_open_accessibility" />
+            android:text="@string/phone_open_listener" />
 
         <Button
             android:id="@+id/open_app_info"
@@ -92,41 +96,33 @@
                 android:text="@string/phone_code_save" />
         </LinearLayout>
 
-        <!-- Step 3: orientation -->
+        <!-- Step 3: calls -->
         <TextView
             style="@style/Heading"
-            android:text="@string/phone_step_orientation" />
-
-        <RadioGroup
-            android:id="@+id/orientation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/orientation_landscape"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_orientation_landscape"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/orientation_portrait"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_orientation_portrait"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/orientation_free"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_orientation_free"
-                android:textSize="16sp" />
-        </RadioGroup>
+            android:text="@string/phone_step_calls" />
 
         <TextView
             style="@style/Body"
-            android:text="@string/phone_orientation_hint" />
+            android:text="@string/phone_step_calls_text" />
+
+        <TextView
+            android:id="@+id/calls_state"
+            style="@style/State" />
+
+        <Button
+            android:id="@+id/calls_permission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_calls_button" />
+
+        <!-- Step 4: start navigation from the radio -->
+        <TextView
+            style="@style/Heading"
+            android:text="@string/phone_step_navigation" />
+
+        <TextView
+            style="@style/Body"
+            android:text="@string/phone_step_navigation_text" />
 
         <TextView
             android:id="@+id/overlay_state"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /** Stored settings for both modes. */
@@ -11,22 +14,7 @@ final class Prefs {
     static final String MODE_PHONE = "phone";
     static final String MODE_RADIO = "radio";
 
-    /**
-     * Phone content is shown sideways, so it fills the wide radio screen. The phone itself can
-     * stay upright in its holder.
-     */
-    static final String ORIENTATION_LANDSCAPE = "landscape";
-    /** Phone content stays upright; the radio shows a narrow, tall picture. */
-    static final String ORIENTATION_PORTRAIT = "portrait";
-    /** Leave rotation to the phone. */
-    static final String ORIENTATION_FREE = "free";
-
-    /** Radio fills the screen, squeezing the picture a little. */
-    static final String DISPLAY_STRETCH = "stretch";
-    /** Radio fills the screen, cutting off the picture's edges. */
-    static final String DISPLAY_ZOOM = "zoom";
-    /** Radio shows the whole picture with black bars. */
-    static final String DISPLAY_FIT = "fit";
+    private static final int MAX_DESTINATIONS = 6;
 
     private final SharedPreferences sp;
 
@@ -54,12 +42,13 @@ final class Prefs {
         sp.edit().putString("trusted_code", code).apply();
     }
 
-    String orientation() {
-        return sp.getString("orientation", ORIENTATION_LANDSCAPE);
+    /** Whether the phone service should come back after a reboot or an update. */
+    boolean autoStart() {
+        return sp.getBoolean("auto_start", false);
     }
 
-    void setOrientation(String orientation) {
-        sp.edit().putString("orientation", orientation).apply();
+    void setAutoStart(boolean value) {
+        sp.edit().putBoolean("auto_start", value).apply();
     }
 
     // Radio side
@@ -72,14 +61,6 @@ final class Prefs {
             sp.edit().putString("radio_code", code).apply();
         }
         return code;
-    }
-
-    String displayMode() {
-        return sp.getString("display_mode", DISPLAY_STRETCH);
-    }
-
-    void setDisplayMode(String mode) {
-        sp.edit().putString("display_mode", mode).apply();
     }
 
     String manualPhoneIp() {
@@ -96,5 +77,38 @@ final class Prefs {
 
     void setLastPhoneIp(String ip) {
         sp.edit().putString("last_ip", ip).apply();
+    }
+
+    /** Read new messages aloud on the radio as they arrive. */
+    boolean autoRead() {
+        return sp.getBoolean("auto_read", false);
+    }
+
+    void setAutoRead(boolean value) {
+        sp.edit().putBoolean("auto_read", value).apply();
+    }
+
+    /** Recently used navigation destinations, newest first. */
+    List<String> destinations() {
+        String stored = sp.getString("destinations", "");
+        List<String> result = new ArrayList<>();
+        if (stored.length() > 0) {
+            result.addAll(Arrays.asList(stored.split("\n")));
+        }
+        return result;
+    }
+
+    void addDestination(String destination) {
+        List<String> list = destinations();
+        list.remove(destination);
+        list.add(0, destination);
+        StringBuilder joined = new StringBuilder();
+        for (int i = 0; i < list.size() && i < MAX_DESTINATIONS; i++) {
+            if (i > 0) {
+                joined.append('\n');
+            }
+            joined.append(list.get(i));
+        }
+        sp.edit().putString("destinations", joined.toString()).apply();
     }
 }

@@ -11,8 +11,8 @@ android {
         // Old head units often still run Android 4.x, so keep this low.
         minSdk 16
         targetSdk 35
-        versionCode 3
-        versionName '1.2'
+        versionCode 4
+        versionName '2.0'
     }
 
     signingConfigs {
@@ -37,6 +37,7 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
     }
 
     compileOptions {
@@ -47,4 +48,8 @@ android {
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'
+    // The real org.json, instead of Android's stubs, for unit tests.
+    testImplementation 'org.json:json:20240303'
+    // Renders the radio screens to PNG files without a device.
+    testImplementation 'org.robolectric:robolectric:4.14.1'
 }

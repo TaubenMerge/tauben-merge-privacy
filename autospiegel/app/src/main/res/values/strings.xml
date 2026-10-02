@@ -4,7 +4,7 @@
 
     <!-- Start / mode chooser -->
     <string name="start_title">Willkommen bei AutoSpiegel</string>
-    <string name="start_text">Installiere diese App auf dem Handy UND auf dem Autoradio. Das Handy schickt sein Bild per WLAN ans Radio, und du bedienst das Handy über den Bildschirm im Auto.\n\nWas ist dieses Gerät?</string>
+    <string name="start_text">Installiere diese App auf dem Handy UND auf dem Autoradio. Das Radio bekommt eine eigene Oberfläche im Querformat für Musik, Navigation, Nachrichten und Telefon – das Handy bleibt dabei ganz normal hochkant.\n\nWas ist dieses Gerät?</string>
     <string name="start_phone">Das ist mein Handy</string>
     <string name="start_radio">Das ist das Autoradio</string>
     <string name="start_phone_too_old">Für den Handy-Modus braucht das Gerät mindestens Android 7.</string>
@@ -12,69 +12,127 @@
 
     <!-- Phone screen -->
     <string name="phone_title">AutoSpiegel – Handy</string>
-    <string name="phone_step_control">1. Bedienung vom Radio erlauben</string>
-    <string name="phone_step_control_text">Damit du das Handy über den Bildschirm im Auto steuern kannst: Öffne die Bedienungshilfen, tippe auf »AutoSpiegel« und schalte es ein.\n\nIst der Schalter gesperrt (»Eingeschränkte Einstellung«)? Dann öffne die App-Info, tippe oben rechts auf ⋮ → »Eingeschränkte Einstellungen zulassen« und versuche es noch einmal.</string>
-    <string name="phone_open_accessibility">Bedienungshilfen öffnen</string>
+    <string name="phone_intro">Das Radio zeigt seine eigene Oberfläche im Querformat: Musik, Navigation, Nachrichten und Telefon. Dein Handy bleibt ganz normal hochkant und darf dabei gesperrt in der Tasche sein.</string>
+    <string name="phone_start">Verbindung starten</string>
+    <string name="phone_stop">Verbindung beenden</string>
+    <string name="phone_step_listener">1. Benachrichtigungszugriff erlauben</string>
+    <string name="phone_step_listener_text">Damit das Radio Musik, Navigations-Hinweise, Nachrichten und Anrufe anzeigen und steuern kann: »Benachrichtigungszugriff öffnen« → AutoSpiegel → erlauben.\n\nIst der Schalter gesperrt (»Eingeschränkte Einstellung«)? Dann öffne die App-Info, tippe oben rechts auf ⋮ → »Eingeschränkte Einstellungen zulassen« und versuche es noch einmal.</string>
+    <string name="phone_open_listener">Benachrichtigungszugriff öffnen</string>
     <string name="phone_open_app_info">App-Info öffnen</string>
-    <string name="phone_control_on">✓ Bedienung ist erlaubt</string>
-    <string name="phone_control_off">✗ Bedienung ist noch nicht erlaubt</string>
+    <string name="phone_listener_on">✓ Zugriff ist erlaubt</string>
+    <string name="phone_listener_off">✗ Zugriff ist noch nicht erlaubt</string>
     <string name="phone_step_code">2. Radio-Code eingeben</string>
-    <string name="phone_step_code_text">Das Radio zeigt einen 6-stelligen Code an. Gib ihn hier einmal ein – danach verbinden sich die beiden automatisch, und kein fremdes Gerät kann dein Handy sehen.</string>
+    <string name="phone_step_code_text">Das Radio zeigt einen 6-stelligen Code an. Gib ihn hier einmal ein – danach verbinden sich die beiden automatisch, und kein fremdes Gerät kann sich mit deinem Handy verbinden.</string>
     <string name="phone_code_hint">Code vom Radio</string>
     <string name="phone_code_save">Speichern</string>
     <string name="phone_code_saved">Code gespeichert</string>
     <string name="phone_code_invalid">Der Code hat genau 6 Ziffern</string>
-    <string name="phone_step_orientation">3. Ausrichtung des Handys</string>
-    <string name="phone_orientation_landscape">Inhalt quer (empfohlen) – das Radio ist voll ausgefüllt. Das Handy bleibt trotzdem hochkant in der Halterung, nur das Bild darauf liegt quer.</string>
-    <string name="phone_orientation_portrait">Inhalt hochkant – auf dem Radio nur ein schmales Bild mit schwarzen Rändern</string>
-    <string name="phone_orientation_free">Nicht festlegen – so, wie das Handy gerade steht</string>
-    <string name="phone_orientation_hint">Gilt sofort, auch während des Spiegelns. Zum Festhalten braucht AutoSpiegel diese Erlaubnis:</string>
+    <string name="phone_step_calls">3. Telefonieren vom Radio (optional)</string>
+    <string name="phone_step_calls_text">Zeigt deine Favoriten (Kontakte mit Stern) am Radio und ruft per Tipp an. Der Ton läuft wie gewohnt über Bluetooth.</string>
+    <string name="phone_calls_button">Kontakte und Anrufe erlauben</string>
+    <string name="phone_calls_on">✓ Erlaubt</string>
+    <string name="phone_calls_off">✗ Noch nicht erlaubt</string>
+    <string name="phone_step_navigation">4. Navi vom Radio starten (optional)</string>
+    <string name="phone_step_navigation_text">Damit das Radio ein Ziel an Google Maps auf dem Handy schicken kann, braucht AutoSpiegel die Erlaubnis »Über anderen Apps einblenden«.</string>
     <string name="phone_overlay_button">Erlaubnis »Über anderen Apps einblenden«</string>
     <string name="phone_overlay_on">✓ Erlaubnis ist erteilt</string>
-    <string name="phone_overlay_off">✗ Erlaubnis fehlt – ohne sie kann AutoSpiegel das Bild nicht quer stellen</string>
-    <string name="phone_start">Spiegeln starten</string>
-    <string name="phone_stop">Spiegeln beenden</string>
+    <string name="phone_overlay_off">✗ Erlaubnis fehlt noch</string>
     <string name="phone_howto_title">So verbindest du Handy und Radio</string>
-    <string name="phone_howto_text">• Schalte am Handy den WLAN-Hotspot ein und verbinde das Radio damit (oder beide mit demselben WLAN).\n• Ton und Telefonate laufen wie gewohnt über Bluetooth – koppel das Handy einfach per Bluetooth mit dem Radio.\n• Das Handy-Display bleibt beim Spiegeln an (gedimmt). Am besten das Handy dabei laden.</string>
+    <string name="phone_howto_text">• Schalte am Handy den WLAN-Hotspot ein und verbinde das Radio damit (oder beide mit demselben WLAN).\n• Musik und Telefonate laufen wie gewohnt über Bluetooth – koppel das Handy per Bluetooth mit dem Radio.\n• Die Verbindung läuft im Hintergrund und startet nach einem Neustart von selbst, bis du sie beendest.</string>
     <string name="phone_apk_title">App aufs Radio bringen</string>
-    <string name="phone_apk_text">Während das Spiegeln läuft, kann das Radio die App direkt von diesem Handy laden: Radio mit dem Hotspot verbinden, im Browser des Radios diese Adresse öffnen und die Datei installieren:</string>
-    <string name="phone_apk_none">(Erst Spiegeln starten und Hotspot/WLAN einschalten, dann erscheint hier die Adresse.)</string>
+    <string name="phone_apk_text">Während die Verbindung läuft, kann das Radio die App direkt von diesem Handy laden: Radio mit dem Hotspot verbinden, im Browser des Radios diese Adresse öffnen und die Datei installieren:</string>
+    <string name="phone_apk_none">(Erst Verbindung starten und Hotspot/WLAN einschalten, dann erscheint hier die Adresse.)</string>
 
     <!-- Phone status -->
-    <string name="status_stopped">Spiegeln ist aus.</string>
+    <string name="status_stopped">Verbindung ist aus.</string>
     <string name="status_waiting">Bereit – warte auf das Radio …</string>
     <string name="status_connected">Verbunden mit %1$s</string>
     <string name="status_wrong_code">%1$s möchte sich verbinden. Gib unten den Code ein, den das Radio anzeigt.</string>
     <string name="status_error">Fehler: %1$s</string>
 
     <!-- Notification -->
-    <string name="channel_name">Spiegeln</string>
-    <string name="notification_title">AutoSpiegel läuft</string>
-    <string name="notification_text">Dein Bildschirm wird ans Autoradio geschickt.</string>
+    <string name="channel_name">Verbindung zum Radio</string>
+    <string name="notification_title">AutoSpiegel ist bereit</string>
+    <string name="notification_text">Verbindet sich automatisch mit dem Autoradio.</string>
     <string name="notification_stop">Beenden</string>
 
-    <!-- Accessibility service -->
-    <string name="a11y_description">Erlaubt AutoSpiegel, Berührungen vom Autoradio-Bildschirm auf diesem Handy auszuführen (Tippen, Wischen, Zurück, Home). Es werden keine Inhalte gelesen oder gespeichert.</string>
+    <!-- Call buttons for phone apps that use the Android 12+ call style -->
+    <string name="call_answer">Annehmen</string>
+    <string name="call_decline">Ablehnen</string>
+    <string name="call_hang_up">Auflegen</string>
 
-    <!-- Radio screen -->
-    <string name="radio_searching">Suche Handy …\n\n1. Am Handy den WLAN-Hotspot einschalten und dieses Radio damit verbinden.\n2. Am Handy AutoSpiegel öffnen und »Spiegeln starten« tippen.\n\nRadio-Code: %1$s\nRadio-IP: %2$s</string>
-    <string name="radio_pair">Neues Handy gefunden!\n\nGib in der AutoSpiegel-App auf dem Handy diesen Radio-Code ein:\n\n%1$s</string>
-    <string name="radio_connected">Verbunden mit %1$s – warte auf Bild …</string>
-    <string name="radio_no_control">Touch ist noch aus: Am Handy in AutoSpiegel Schritt 1 »Bedienung erlauben« erledigen.</string>
-    <string name="radio_decoder_error">Das Radio kann das Video nicht abspielen: %1$s</string>
-    <string name="radio_no_ip">keine (WLAN aus?)</string>
-    <string name="radio_menu_title">Einstellungen</string>
-    <string name="radio_menu_code">Radio-Code: %1$s\n(einmal in der Handy-App eingeben)</string>
-    <string name="radio_menu_ip_hint">Handy-IP (nur falls nötig, sonst leer)</string>
-    <string name="radio_menu_save">Speichern</string>
-    <string name="radio_menu_close">Schließen</string>
-    <string name="radio_display_title">Bild auf dem Radio</string>
-    <string name="radio_display_stretch">Vollbild (leicht gestreckt)</string>
-    <string name="radio_display_zoom">Vollbild (Ränder abgeschnitten)</string>
-    <string name="radio_display_fit">Ganzes Bild (mit schwarzen Rändern)</string>
-    <string name="radio_buttons">Tasten einblenden</string>
-    <string name="radio_back">Zurück</string>
-    <string name="radio_home">Startbildschirm</string>
-    <string name="radio_recents">Letzte Apps</string>
-    <string name="radio_menu">Menü</string>
+    <!-- Phone answers shown on the radio -->
+    <string name="result_no_listener">Am Handy fehlt der Benachrichtigungszugriff (AutoSpiegel → Schritt 1).</string>
+    <string name="result_action_failed">Das hat am Handy nicht geklappt.</string>
+    <string name="result_reply_sent">Antwort gesendet</string>
+    <string name="result_reply_failed">Auf diese Nachricht kann man nicht direkt antworten.</string>
+    <string name="result_no_call_permission">Anrufen ist am Handy nicht erlaubt (AutoSpiegel → Schritt 3).</string>
+    <string name="result_calling">Rufe %1$s an …</string>
+    <string name="result_navigation_started">Navigation startet auf dem Handy …</string>
+    <string name="result_navigation_maybe_blocked">Ziel gesendet. Falls die Navigation nicht startet: am Handy AutoSpiegel → Schritt 4 erlauben.</string>
+    <string name="result_no_navigation_app">Auf dem Handy ist keine Navi-App installiert.</string>
+
+    <!-- Radio -->
+    <string name="radio_rail_home">Start</string>
+    <string name="radio_rail_music">Musik</string>
+    <string name="radio_rail_messages">Nachrichten</string>
+    <string name="radio_rail_phone">Telefon</string>
+    <string name="radio_rail_nav">Navi</string>
+    <string name="radio_rail_apps">Apps</string>
+    <string name="radio_rail_menu">Menü</string>
+    <string name="radio_searching">Suche Handy … · Radio-IP %1$s</string>
+    <string name="radio_searching_no_ip">Suche Handy … · Radio ist mit keinem WLAN verbunden</string>
+    <string name="radio_pairing">Neues Handy – Code im Handy eingeben: %1$s</string>
+    <string name="radio_battery">" · Akku %1$d %%"</string>
+    <string name="radio_charging">" · lädt"</string>
+    <string name="radio_no_listener_short">Benachrichtigungszugriff fehlt</string>
+    <string name="radio_no_listener">Am Handy fehlt noch der Benachrichtigungszugriff (AutoSpiegel → Schritt 1). Ohne ihn sieht das Radio keine Musik, Navigation und Nachrichten.</string>
+    <string name="radio_setup_title">Handy verbinden</string>
+    <string name="radio_setup_text">1. Am Handy den WLAN-Hotspot einschalten und dieses Radio damit verbinden.\n2. Am Handy AutoSpiegel öffnen und »Verbindung starten« tippen.\n3. Beim ersten Mal diesen Radio-Code in der Handy-App eingeben.</string>
+    <string name="radio_setup_code">Radio-Code: %1$s</string>
+    <string name="radio_setup_ip">Radio-IP: %1$s</string>
+    <string name="radio_setup_pair">Handy gefunden – jetzt den Code im Handy eingeben.</string>
+    <string name="radio_nav_title">Navigation</string>
+    <string name="radio_nav_none">Keine Navigation aktiv</string>
+    <string name="radio_nav_none_hint">Ziel eingeben – die Navigation startet auf dem Handy, die Abbiege-Hinweise erscheinen hier.</string>
+    <string name="radio_nav_enter">Ziel eingeben</string>
+    <string name="radio_nav_where">Wohin?</string>
+    <string name="radio_nav_hint">Adresse oder Ort</string>
+    <string name="radio_nav_go">Los</string>
+    <string name="radio_nav_recent">Zuletzt</string>
+    <string name="radio_nav_current">Aktuell: %1$s</string>
+    <string name="radio_nav_info">Die Navigation läuft auf dem Handy (z. B. Google Maps). Die Abbiege-Hinweise erscheinen hier und auf der Startseite. Für eine Karte auf dem Radio kannst du unter »Apps« eine Navi-App des Radios öffnen.</string>
+    <string name="radio_music_none">Keine Musik</string>
+    <string name="radio_music_none_hint">Abspielen startet die Musik auf dem Handy</string>
+    <string name="radio_messages_title">Nachrichten</string>
+    <string name="radio_messages_none">Keine neuen Nachrichten</string>
+    <string name="radio_read">Vorlesen</string>
+    <string name="radio_reply">Antworten</string>
+    <string name="radio_done">Erledigt</string>
+    <string name="radio_reply_title">Antwort an %1$s</string>
+    <string name="radio_reply_own_hint">Eigene Antwort</string>
+    <string name="radio_send">Senden</string>
+    <string name="radio_cancel">Abbrechen</string>
+    <string name="radio_phone_favorites">Favoriten</string>
+    <string name="radio_phone_call">Anrufen</string>
+    <string name="radio_phone_no_contacts">Keine Favoriten. Markiere im Handy Kontakte mit einem Stern – dann erscheinen sie hier.</string>
+    <string name="radio_phone_no_permission">Anrufen ist am Handy noch nicht erlaubt (AutoSpiegel → Schritt 3).</string>
+    <string name="radio_apps_failed">Die App lässt sich nicht öffnen.</string>
+    <string name="radio_not_connected">Kein Handy verbunden</string>
+    <string name="radio_no_tts">Das Radio hat keine Sprachausgabe (Text-to-Speech) installiert.</string>
+    <string name="radio_settings_title">Einstellungen</string>
+    <string name="radio_settings_code">Radio-Code: %1$s\n(einmal in der Handy-App eingeben)</string>
+    <string name="radio_settings_ip_hint">Handy-IP (nur falls nötig, sonst leer)</string>
+    <string name="radio_settings_auto_read">Neue Nachrichten automatisch vorlesen</string>
+    <string name="radio_settings_save">Speichern</string>
+    <string name="radio_settings_close">Schließen</string>
+
+    <string-array name="quick_replies">
+        <item>Ich fahre gerade, melde mich später.</item>
+        <item>Bin unterwegs.</item>
+        <item>Bin gleich da.</item>
+        <item>OK</item>
+        <item>Ja</item>
+        <item>Nein</item>
+    </string-array>
 </resources>

@@ -1,6 +1,8 @@
 package app.autospiegel;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -8,9 +10,11 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.Surface;
 
-import java.io.DataInputStream;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -22,46 +26,39 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Radio side: finds the phone on the local network, receives the video and sends touches.
+ * Radio side: finds the phone on the local network, receives its state and sends commands.
  * Runs between {@link #start()} and {@link #stop()}; reconnects on its own.
  */
 final class RadioClient {
+    static final int STATE_SEARCHING = 0;
+    static final int STATE_PAIRING = 1;
+    static final int STATE_CONNECTED = 2;
+
     interface Listener {
-        /** New status text, or null to hide it. Called on a background thread. */
-        void onStatus(String text);
+        /**
+         * Connection changed. {@code detail} is this radio's IP while searching, the pairing
+         * code while pairing and the phone's name when connected. Background thread.
+         */
+        void onConnection(int state, String detail);
 
-        /** Size of the incoming video. Called on a background thread. */
-        void onVideoSize(int width, int height);
-
-        /** Whether the phone accepts touches. Reported as true again after a disconnect. */
-        void onControlState(boolean enabled);
-
-        /** Pixel size of the area the video may use. */
-        int[] videoAreaSize();
+        /**
+         * A message from the phone: a {@link JSONObject}, a {@link JSONArray} or a
+         * {@link Bitmap} (null when the picture was removed). Background thread.
+         */
+        void onMessage(int type, Object value);
     }
 
     private static final String TAG = "AutoSpiegel";
-    private static final int NOT_FOUND = 0;
-    private static final int CONNECTED = 1;
-    private static final int AUTH_FAILED = 2;
 
     private final Context context;
     private final Prefs prefs;
     private final Listener listener;
-    private final VideoDecoder decoder;
     private volatile Worker worker;
 
     RadioClient(Context context, Prefs prefs, Listener listener) {
         this.context = context.getApplicationContext();
         this.prefs = prefs;
         this.listener = listener;
-        this.decoder = new VideoDecoder(new VideoDecoder.ErrorListener() {
-            @Override
-            public void onDecoderError(String message) {
-                RadioClient.this.listener.onStatus(
-                        RadioClient.this.context.getString(R.string.radio_decoder_error, message));
-            }
-        });
     }
 
     void start() {
@@ -79,26 +76,10 @@ final class RadioClient {
         }
     }
 
-    void setSurface(Surface surface) {
-        decoder.setSurface(surface);
-        if (surface != null) {
-            send(Protocol.MSG_KEYFRAME_REQUEST, Protocol.EMPTY);
-        }
-    }
-
-    void sendTouch(int action, int pointer, float x, float y, long time) {
-        send(Protocol.MSG_TOUCH, Protocol.touch(action, pointer, x, y, time));
-    }
-
-    void sendGlobalAction(int action) {
-        send(Protocol.MSG_GLOBAL_ACTION, Protocol.globalAction(action));
-    }
-
-    private void send(int type, byte[] payload) {
+    /** Sends a command (see {@link Protocol#MSG_COMMAND}); dropped while disconnected. */
+    boolean command(JSONObject cmd) {
         Worker w = worker;
-        if (w != null) {
-            w.send(type, payload);
-        }
+        return w != null && w.send(Protocol.MSG_COMMAND, Protocol.utf8(cmd.toString()));
     }
 
     /** One start/stop cycle with its own threads and sockets. */
@@ -158,10 +139,10 @@ final class RadioClient {
             }
         }
 
-        void send(final int type, final byte[] payload) {
+        boolean send(final int type, final byte[] payload) {
             final Protocol.Writer w = writer;
             if (w == null || !active) {
-                return;
+                return false;
             }
             sendHandler.post(new Runnable() {
                 @Override
@@ -173,12 +154,13 @@ final class RadioClient {
                     }
                 }
             });
+            return true;
         }
 
         private void connectLoop() {
             showSearching();
             while (active) {
-                int result = NOT_FOUND;
+                boolean pairing = false;
                 for (String host : candidates()) {
                     if (!active) {
                         return;
@@ -191,13 +173,13 @@ final class RadioClient {
                         Net.close(s);
                         continue;
                     }
-                    result = runSession(s, host);
+                    pairing = runSession(s, host);
                     break;
                 }
                 if (!active) {
                     return;
                 }
-                if (result != AUTH_FAILED) {
+                if (!pairing) {
                     // Also refreshes the shown IP once the radio joins a network.
                     showSearching();
                 }
@@ -205,33 +187,34 @@ final class RadioClient {
             }
         }
 
-        /** Returns {@link #AUTH_FAILED} if the phone does not know this radio's code yet. */
-        private int runSession(Socket s, String host) {
+        /** Returns true if the phone does not know this radio's code yet. */
+        private boolean runSession(Socket s, String host) {
+            boolean connected = false;
             try {
                 s.setTcpNoDelay(true);
                 s.setSoTimeout(15000);
                 Protocol.Reader reader = new Protocol.Reader(s.getInputStream());
                 Protocol.Writer w = new Protocol.Writer(s.getOutputStream());
-                int[] area = listener.videoAreaSize();
-                w.send(Protocol.MSG_HELLO,
-                        Protocol.hello(prefs.radioCode(), area[0], area[1], Build.MODEL));
+                JSONObject hello = new JSONObject();
+                hello.put("v", Protocol.VERSION);
+                hello.put("code", prefs.radioCode());
+                hello.put("name", Build.MODEL);
+                w.send(Protocol.MSG_HELLO, Protocol.utf8(hello.toString()));
 
                 reader.next();
                 if (reader.type == Protocol.MSG_AUTH_FAIL) {
-                    listener.onStatus(context.getString(R.string.radio_pair, prefs.radioCode()));
+                    listener.onConnection(STATE_PAIRING, prefs.radioCode());
                     SystemClock.sleep(2000);
-                    return AUTH_FAILED;
+                    return true;
                 }
                 if (reader.type != Protocol.MSG_HELLO_OK) {
-                    return CONNECTED;
+                    return false;
                 }
-                DataInputStream ok = reader.payload();
-                String phoneName = ok.readUTF();
-                boolean controlEnabled = ok.readBoolean();
+                String phoneName = new JSONObject(reader.text()).optString("name", "Handy");
                 prefs.setLastPhoneIp(host);
                 writer = w;
-                listener.onStatus(context.getString(R.string.radio_connected, phoneName));
-                listener.onControlState(controlEnabled);
+                connected = true;
+                listener.onConnection(STATE_CONNECTED, phoneName);
 
                 long lastPing = 0;
                 while (active) {
@@ -239,40 +222,51 @@ final class RadioClient {
                     if (!active) {
                         break;
                     }
-                    if (reader.type == Protocol.MSG_VIDEO_FRAME && reader.length >= 12) {
-                        decoder.feed(Protocol.readInt(reader.buffer, 0),
-                                Protocol.readLong(reader.buffer, 4),
-                                reader.buffer, 12, reader.length - 12);
-                    } else if (reader.type == Protocol.MSG_VIDEO_CONFIG && reader.length >= 8) {
-                        int width = Protocol.readInt(reader.buffer, 0);
-                        int height = Protocol.readInt(reader.buffer, 4);
-                        byte[] csd = new byte[reader.length - 8];
-                        System.arraycopy(reader.buffer, 8, csd, 0, csd.length);
-                        listener.onVideoSize(width, height);
-                        decoder.configure(width, height, csd);
-                        listener.onStatus(null);
-                    } else if (reader.type == Protocol.MSG_CONTROL_STATE && reader.length >= 1) {
-                        listener.onControlState(reader.buffer[0] != 0);
-                    }
+                    deliver(reader);
                     long now = SystemClock.uptimeMillis();
                     if (now - lastPing > 2000) {
                         lastPing = now;
                         send(Protocol.MSG_PING, Protocol.EMPTY);
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 Log.i(TAG, "Connection ended: " + e.getMessage());
             } finally {
                 writer = null;
                 Net.close(s);
-                listener.onControlState(true);
-                // After a quick stop/start a newer worker may already own the decoder.
-                Worker current = worker;
-                if (current == null || current == this) {
-                    decoder.reset();
-                }
             }
-            return CONNECTED;
+            if (connected && active) {
+                listener.onConnection(STATE_SEARCHING, ownIp());
+            }
+            return false;
+        }
+
+        private void deliver(Protocol.Reader reader) {
+            try {
+                switch (reader.type) {
+                    case Protocol.MSG_STATUS:
+                    case Protocol.MSG_MEDIA:
+                    case Protocol.MSG_NAV:
+                    case Protocol.MSG_RESULT:
+                        listener.onMessage(reader.type, new JSONObject(reader.text()));
+                        break;
+                    case Protocol.MSG_NOTIFICATIONS:
+                    case Protocol.MSG_CONTACTS:
+                        listener.onMessage(reader.type, new JSONArray(reader.text()));
+                        break;
+                    case Protocol.MSG_MEDIA_ART:
+                    case Protocol.MSG_NAV_ICON:
+                        Bitmap picture = reader.length == 0 ? null
+                                : BitmapFactory.decodeByteArray(reader.buffer, 0, reader.length);
+                        listener.onMessage(reader.type, picture);
+                        break;
+                    default:
+                        // Ping or a message from a newer version.
+                        break;
+                }
+            } catch (JSONException e) {
+                Log.w(TAG, "Bad message " + reader.type, e);
+            }
         }
 
         /** Where the phone might be, most likely first. */
@@ -283,7 +277,7 @@ final class RadioClient {
                 hosts.add(manual);
             }
             String beacon = beaconAddress;
-            if (beacon != null && SystemClock.elapsedRealtime() - beaconTime < 5000) {
+            if (beacon != null && SystemClock.elapsedRealtime() - beaconTime < 6000) {
                 hosts.add(beacon);
             }
             // With the phone's hotspot, the phone is the radio's gateway.
@@ -318,7 +312,7 @@ final class RadioClient {
                             continue;
                         }
                         String message =
-                                new String(packet.getData(), 0, packet.getLength(), "UTF-8");
+                                new String(packet.getData(), 0, packet.getLength(), Protocol.UTF8);
                         if (message.startsWith(prefix) && packet.getAddress() != null) {
                             beaconAddress = packet.getAddress().getHostAddress();
                             beaconTime = SystemClock.elapsedRealtime();
@@ -335,10 +329,13 @@ final class RadioClient {
         }
 
         private void showSearching() {
-            List<String> ips = Net.lanIps();
-            String ip = ips.isEmpty() ? context.getString(R.string.radio_no_ip) : ips.get(0);
-            listener.onStatus(context.getString(R.string.radio_searching, prefs.radioCode(), ip));
+            listener.onConnection(STATE_SEARCHING, ownIp());
         }
+    }
+
+    private String ownIp() {
+        List<String> ips = Net.lanIps();
+        return ips.isEmpty() ? "" : ips.get(0);
     }
 
     private String gatewayIp() {

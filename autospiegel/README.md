@@ -1,16 +1,39 @@
 # AutoSpiegel
 
 Kostenlose, schlanke Alternative zu Android Auto für ältere Android-Autoradios.
-Das Handy schickt sein Bild per WLAN ans Radio, und du bedienst das Handy über den
-Touchscreen im Auto: tippen, wischen und mit zwei Fingern zoomen. Das Bild füllt den
-Radio-Bildschirm komplett aus. Die Tasten für Zurück, Startbildschirm und Letzte Apps
-klappst du über eine kleine Lasche am linken Rand aus.
+
+Das Radio bekommt **eine eigene Oberfläche im Querformat**: randvoll und ohne Verzerrung.
+Das Handy bleibt dabei **ganz normal hochkant** und darf gesperrt in der Tasche oder
+Halterung liegen. Es spiegelt nicht seinen Bildschirm, sondern liefert nur die Daten, so
+wie es Android Auto auch macht.
+
+![Startseite auf dem Radio](screenshots/radio-1-start.png)
+
+| Musik | Nachrichten |
+|---|---|
+| ![Musik](screenshots/radio-2-musik.png) | ![Nachrichten](screenshots/radio-3-nachrichten.png) |
+| **Telefon** | **Eingehender Anruf** |
+| ![Telefon](screenshots/radio-4-telefon.png) | ![Anruf](screenshots/radio-6-anruf.png) |
+
+*(Bilder in Radio-Auflösung 1024 × 600 mit Beispieldaten.)*
+
+## Was das Radio kann
+
+- **Musik:** Titel, Interpret, Cover, Fortschritt sowie Abspielen, Pause, Vor und Zurück.
+  Das funktioniert mit jeder Musik-App auf dem Handy (Spotify, YouTube Music, Radio-Apps …).
+- **Navigation:** Du gibst am Radio ein Ziel ein, dann startet Google Maps auf dem Handy.
+  Die Abbiege-Hinweise („300 m – rechts abbiegen auf …“) erscheinen groß auf dem Radio.
+- **Nachrichten:** WhatsApp, SMS, Telegram usw. werden angezeigt und **vorgelesen**.
+  Antworten geht mit einem Tipp (Schnellantworten) oder per Tastatur.
+- **Anrufe:** Ein eingehender Anruf erscheint mit „Annehmen“ und „Ablehnen“.
+  Unter Telefon gibt es Wähltasten und deine Favoriten. Der Ton läuft über Bluetooth.
+- **Apps:** Hier startest du die eigenen Apps des Radios, z. B. eine Navi-App mit Karte.
+  Über den Hotspot des Handys haben sie Internet.
 
 - **Kostenlos**, ohne Abo, ohne Werbung und ohne Google-Konto.
-- **Sehr leicht fürs Radio:** Die App ist ca. 60 KB groß. Das Radio spielt nur ein
-  Video ab (Hardware-Decoder), die ganze Arbeit macht das Handy.
+- **Sehr leicht fürs Radio:** Die App ist ca. 90 KB groß. Es wird kein Video übertragen,
+  nur ein paar Daten. Das schafft auch ein Radio mit 1 GB RAM locker.
 - **Radio:** ab Android 4.1. **Handy:** ab Android 7.
-- Ton und Telefonate laufen wie gewohnt über **Bluetooth**.
 
 Es ist **eine** App für beide Geräte. Beim ersten Start wählst du, ob das Gerät das
 Handy oder das Radio ist.
@@ -23,9 +46,9 @@ Handy oder das Radio ist.
 Quellen erlauben.
 
 **Aufs Radio:** Dafür gibt es drei Wege, nimm den einfachsten:
-1. **Direkt vom Handy:** Installiere die App zuerst auf dem Handy und starte dort
-   „Spiegeln“. Schalte den Hotspot ein und verbinde das Radio damit. Öffne dann im
-   Browser des Radios die Adresse, die die Handy-App anzeigt (z. B.
+1. **Direkt vom Handy:** Installiere die App zuerst auf dem Handy und tippe dort
+   „Verbindung starten“. Schalte den Hotspot ein und verbinde das Radio damit. Öffne
+   dann im Browser des Radios die Adresse, die die Handy-App anzeigt (z. B.
    `http://192.168.43.1:47802`).
 2. **USB-Stick:** APK auf einen Stick kopieren, am Radio mit dem Dateimanager öffnen.
 3. **Browser am Radio:**
@@ -36,58 +59,50 @@ Quellen erlauben.
 1. **Radio:** AutoSpiegel öffnen → „Das ist das Autoradio“. Es zeigt einen
    6-stelligen **Radio-Code** an.
 2. **Handy:** AutoSpiegel öffnen → „Das ist mein Handy“, dann:
-   - **Bedienung erlauben:** „Bedienungshilfen öffnen“ → AutoSpiegel → einschalten.
-     Ist der Schalter gesperrt („Eingeschränkte Einstellung“, ab Android 13)? Dann
-     „App-Info öffnen“ → ⋮ oben rechts → „Eingeschränkte Einstellungen zulassen“
-     und noch einmal versuchen.
-   - **Radio-Code** eingeben → Speichern. Dadurch kann sich nur dein Radio verbinden.
-   - **Ausrichtung:** Standard ist **„Inhalt quer“**. Das Handy bleibt hochkant in
-     der Halterung, nur das Bild darauf wird quer dargestellt. So füllt es den breiten
-     Radio-Bildschirm. Dafür braucht die App die Erlaubnis „Über anderen Apps
-     einblenden“. Mit „Inhalt hochkant“ bleibt auch das Bild aufrecht, dann zeigt das
-     Radio aber nur einen schmalen Streifen. Die Änderung gilt sofort.
-3. Handy und Radio per **Bluetooth** koppeln (für Musik und Anrufe), falls noch nicht
+   1. **Benachrichtigungszugriff erlauben.** Den braucht die App für Musik,
+      Navigation, Nachrichten und Anrufe. Ist der Schalter gesperrt („Eingeschränkte
+      Einstellung“, ab Android 13)? Dann „App-Info öffnen“ → ⋮ oben rechts →
+      „Eingeschränkte Einstellungen zulassen“ und noch einmal versuchen.
+   2. **Radio-Code** eingeben → Speichern. Dadurch kann sich nur dein Radio verbinden.
+   3. *Optional:* **Kontakte und Anrufe erlauben.** Dann erscheinen deine Favoriten
+      (Kontakte mit Stern) am Radio.
+   4. *Optional:* **„Über anderen Apps einblenden“ erlauben.** Dann kann das Radio
+      die Navigation auf dem Handy starten.
+   5. **„Verbindung starten“** tippen. Die Verbindung läuft danach im Hintergrund
+      weiter, auch nach einem Neustart, bis du sie beendest.
+3. Handy und Radio per **Bluetooth** koppeln (für Musik und Telefonate), falls noch nicht
    geschehen.
 
 ## Benutzen
 
 1. Am Handy den **WLAN-Hotspot** einschalten. Das Radio verbindet sich damit (nach
    dem ersten Mal automatisch).
-2. Am Handy in AutoSpiegel **„Spiegeln starten“** tippen und bestätigen.
-3. Am Radio AutoSpiegel öffnen. Es findet das Handy von selbst.
+2. Am Radio AutoSpiegel öffnen. Es findet das Handy von selbst. Oben links steht
+   dann der Handy-Name mit grünem Punkt.
 
-Das Handy-Display bleibt beim Spiegeln gedimmt an. Am besten lädst du das Handy dabei.
-Mit „Spiegeln beenden“ oder über die Benachrichtigung hörst du auf.
+Das Handy musst du dafür nicht anfassen. Es kann gesperrt bleiben.
 
 ## Gut zu wissen
 
-- **Touch:** Solange am Handy die Bedienung noch nicht erlaubt ist, zeigt das Radio
-  unten einen gelben Hinweis. Ist er verschwunden, funktioniert Touch.
-- **Vollbild am Radio:** Ein Handybild ist breiter als die meisten Radio-Bildschirme.
-  Damit es den Bildschirm trotzdem ganz füllt, wird es standardmäßig leicht gestreckt.
-  Über die Lasche → ⋮ kannst du stattdessen „Ränder abgeschnitten“ oder „Ganzes Bild“
-  (mit schwarzen Rändern) wählen. Ein hochkant ausgerichtetes Bild zeigt das Radio
-  immer ganz und deshalb schmal.
-- **Wischen und Ziehen** werden ausgeführt, sobald du den Finger loslässt. Kurze
-  Wischer fühlen sich normal an, langes Ziehen (z. B. eine Karte verschieben) kommt
-  etwas verzögert an. Tippen geht sofort.
-- **Ist die Schrift zu klein?** Dann am Handy unter Einstellungen → Anzeige die
-  Schrift- bzw. Anzeigegröße erhöhen.
-- Manche Apps (Banking, Netflix usw.) sperren Bildschirmaufnahmen. Sie bleiben am
-  Radio schwarz.
-- Falls das Radio das Handy nicht findet: Am Radio die Lasche links antippen, auf ⋮
-  tippen und die Handy-IP von Hand eintragen.
+- **Eine Karte zeigt das Radio nicht von selbst an:** Navigiert wird auf dem Handy, das
+  Radio zeigt die Abbiege-Hinweise. Wer eine Karte auf dem Radio will, startet unter
+  „Apps“ eine Navi-App des Radios.
+- **Vorlesen** nutzt die Sprachausgabe des Radios. Fehlt sie, meldet das Radio das.
+  Im Radio-Menü (⋮) kannst du einstellen, dass neue Nachrichten automatisch vorgelesen
+  werden.
+- Falls das Radio das Handy nicht findet: Im Radio-Menü (⋮) die Handy-IP von Hand
+  eintragen.
 
 ## Technik
 
-- Das Handy nimmt den Bildschirm über `MediaProjection` auf, kodiert ihn als H.264
-  (Baseline, 30 fps, max. 1280 px) und schickt ihn per TCP (Port 47800).
-- Das Radio dekodiert mit `MediaCodec` direkt auf eine `SurfaceView` und schickt
-  Touch-Ereignisse zurück. Das Handy führt sie als Bedienungshilfen-Geste aus
-  (`dispatchGesture`).
+- Das Handy liest über einen `NotificationListenerService` die Mediensitzungen
+  (`MediaSessionManager`), die Benachrichtigung der Navi-App und Nachrichten und
+  Anrufe. Antworten verschickt es über `RemoteInput`, wie eine Smartwatch.
+- Ein Hintergrunddienst (`connectedDevice`) schickt das per TCP (Port 47800) als kleine
+  JSON-Nachrichten ans Radio, Bilder als JPEG oder PNG. Das Radio sendet Befehle zurück.
 - Das Radio findet das Handy über UDP-Broadcast (Port 47801) oder das Gateway des
   Hotspots. Die Kopplung läuft über den Radio-Code.
-- Port 47802 liefert während des Spiegelns die APK für das Radio aus.
+- Port 47802 liefert die APK für das Radio aus.
 
 ## Selbst bauen
 
@@ -95,6 +110,7 @@ Mit „Spiegeln beenden“ oder über die Benachrichtigung hörst du auf.
 export ANDROID_HOME=/pfad/zum/android-sdk
 ./gradlew assembleRelease testReleaseUnitTest
 # → app/build/outputs/apk/release/app-release.apk
+# → app/build/screenshots/*.png (Radio-Bildschirme, mit Robolectric gezeichnet)
 ```
 
 Der Signaturschlüssel in `signing/` ist absichtlich nicht geheim. So lässt sich jede
