@@ -579,7 +579,7 @@ public class MirrorService extends Service {
             return;
         }
         Point real = realDisplaySize();
-        int[] size = fit(real.x, real.y, 640, 640);
+        int[] size = videoSize(real.x, real.y, 640, 640);
         try {
             // Created right away (without a surface) because a projection may only create one
             // display; radios connecting later just swap in their encoder surface.
@@ -608,7 +608,7 @@ public class MirrorService extends Service {
             return;
         }
         Point real = realDisplaySize();
-        int[] size = fit(real.x, real.y, s.maxWidth, s.maxHeight);
+        int[] size = videoSize(real.x, real.y, s.maxWidth, s.maxHeight);
         try {
             Encoder e = new Encoder(s, size[0], size[1]);
             encoder = e;
@@ -647,15 +647,19 @@ public class MirrorService extends Service {
     }
 
     /**
-     * Scales the phone screen to fit the radio's video area, at most {@link #MAX_LONG_SIDE}
-     * pixels wide, with both sides a multiple of 16 as many encoders require.
+     * Video size for the radio's screen, at most {@link #MAX_LONG_SIDE} pixels on the long side,
+     * both sides a multiple of 16 as many encoders require. A sideways picture is made large
+     * enough to cover the whole screen, because the radio fills its screen with it; an upright
+     * one only needs to fit, because the radio always shows it whole.
      */
-    static int[] fit(int srcWidth, int srcHeight, int maxWidth, int maxHeight) {
+    static int[] videoSize(int srcWidth, int srcHeight, int maxWidth, int maxHeight) {
         if (maxWidth <= 0 || maxHeight <= 0) {
             maxWidth = 1280;
             maxHeight = 720;
         }
-        double scale = Math.min((double) maxWidth / srcWidth, (double) maxHeight / srcHeight);
+        double scaleX = (double) maxWidth / srcWidth;
+        double scaleY = (double) maxHeight / srcHeight;
+        double scale = srcWidth >= srcHeight ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
         scale = Math.min(scale, (double) MAX_LONG_SIDE / Math.max(srcWidth, srcHeight));
         scale = Math.min(scale, 1.0);
         int width = Math.max(160, ((int) (srcWidth * scale)) & ~15);
@@ -840,8 +844,8 @@ public class MirrorService extends Service {
 
     /**
      * An invisible 1×1 overlay that requests an orientation. The system then shows every app
-     * that way: upright (the phone does not turn in its holder) or sideways (the picture fills
-     * the wide radio screen).
+     * that way, however the phone is held: sideways (the picture fills the wide radio screen,
+     * while the phone itself can stay upright in its holder) or upright.
      */
     private void showOrientationOverlay() {
         String orientation = prefs.orientation();
@@ -849,7 +853,8 @@ public class MirrorService extends Service {
         if (Prefs.ORIENTATION_PORTRAIT.equals(orientation)) {
             requested = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         } else if (Prefs.ORIENTATION_LANDSCAPE.equals(orientation)) {
-            requested = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+            // Fixed, so a phone standing upright in a shaky holder never flips the picture.
+            requested = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         } else {
             return;
         }

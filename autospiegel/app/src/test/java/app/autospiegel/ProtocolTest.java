@@ -96,14 +96,6 @@ public class ProtocolTest {
         assertEquals(1, reader.buffer[0]);
     }
 
-    @Test
-    public void portraitPhoneFillsTheRadioHeight() {
-        // Upright phone on a 1024x600 radio: tall and narrow, using the full height.
-        int[] size = MirrorService.fit(1080, 2400, 944, 600);
-        assertEquals(256, size[0]);
-        assertEquals(592, size[1]);
-    }
-
     @Test(expected = IOException.class)
     public void rejectsAbsurdLengths() throws IOException {
         byte[] bad = {Protocol.MSG_VIDEO_FRAME, 0x7f, 0, 0, 0};
@@ -111,25 +103,30 @@ public class ProtocolTest {
     }
 
     @Test
-    public void fitKeepsAspectAndAlignment() {
-        // Landscape phone into a 1024x600 radio with an 80 px sidebar.
-        int[] size = MirrorService.fit(2400, 1080, 944, 600);
-        assertEquals(944, size[0]);
-        assertEquals(416, size[1]);
+    public void sidewaysPhoneCoversTheWholeRadioScreen() {
+        // 20:9 phone content on a 1024x600 radio: at least as tall as the screen, so filling
+        // it never upscales much; capped at 1280 px.
+        int[] size = MirrorService.videoSize(2400, 1080, 1024, 600);
+        assertEquals(1280, size[0]);
+        assertEquals(576, size[1]);
 
-        // Portrait phone: limited by the radio's height.
-        size = MirrorService.fit(1080, 2400, 944, 600);
-        assertTrue(size[1] <= 600);
+        // Small radio: just big enough to cover 800x480.
+        size = MirrorService.videoSize(2400, 1080, 800, 480);
+        assertTrue(size[0] >= 1040 && size[0] <= 1066);
+        assertTrue(size[1] >= 464 && size[1] <= 480);
         assertEquals(0, size[0] % 16);
         assertEquals(0, size[1] % 16);
 
-        // Big radio: capped at 1280 on the long side.
-        size = MirrorService.fit(2400, 1080, 1900, 1080);
-        assertTrue(size[0] <= 1280);
-
         // Unknown radio size falls back to 1280x720.
-        size = MirrorService.fit(1920, 1080, 0, 0);
+        size = MirrorService.videoSize(1920, 1080, 0, 0);
         assertEquals(1280, size[0]);
         assertEquals(720, size[1]);
+    }
+
+    @Test
+    public void uprightPhoneOnlyFitsTheRadioHeight() {
+        int[] size = MirrorService.videoSize(1080, 2400, 1024, 600);
+        assertEquals(256, size[0]);
+        assertEquals(592, size[1]);
     }
 }

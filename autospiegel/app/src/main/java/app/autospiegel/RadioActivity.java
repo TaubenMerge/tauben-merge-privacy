@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -19,55 +21,64 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-/** Radio side: full-screen video of the phone plus Back / Home / Recents buttons. */
+/**
+ * Radio side: the phone's picture edge to edge. Back / Home / Recents / Menu sit in a panel
+ * that a small tab at the left edge opens; it hides again by itself.
+ */
 public class RadioActivity extends Activity implements RadioClient.Listener {
-    private static final int SIDEBAR_DP = 80;
+    private static final int PANEL_DP = 80;
+    private static final long PANEL_HIDE_MS = 5000;
 
     private Prefs prefs;
     private RadioClient client;
-    private FrameLayout videoArea;
+    private FrameLayout root;
     private AspectSurfaceView videoView;
     private TextView statusView;
     private TextView controlHint;
+    private LinearLayout panel;
+    private IconButton handle;
     private volatile int areaWidth;
     private volatile int areaHeight;
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable hidePanel = new Runnable() {
+        @Override
+        public void run() {
+            setPanelVisible(false);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = new Prefs(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                | WindowManager.LayoutParams.FLAG_FULLSCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.HORIZONTAL);
+        root = new FrameLayout(this);
         root.setBackgroundColor(0xFF000000);
 
-        LinearLayout sidebar = new LinearLayout(this);
-        sidebar.setOrientation(LinearLayout.VERTICAL);
-        sidebar.setBackgroundColor(0xFF1C1C1C);
-        addButton(sidebar, IconButton.BACK, R.string.radio_back, Protocol.ACTION_BACK);
-        addButton(sidebar, IconButton.HOME, R.string.radio_home, Protocol.ACTION_HOME);
-        addButton(sidebar, IconButton.RECENTS, R.string.radio_recents, Protocol.ACTION_RECENTS);
-        addButton(sidebar, IconButton.MENU, R.string.radio_menu, 0);
-        root.addView(sidebar, new LinearLayout.LayoutParams(
-                dp(SIDEBAR_DP), ViewGroup.LayoutParams.MATCH_PARENT));
-
-        videoArea = new FrameLayout(this);
         videoView = new AspectSurfaceView(this);
-        videoArea.addView(videoView, new FrameLayout.LayoutParams(
+        videoView.setMode(prefs.displayMode());
+        root.addView(videoView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
                 Gravity.CENTER));
+
         statusView = new TextView(this);
         statusView.setTextColor(0xFFFFFFFF);
         statusView.setBackgroundColor(0xE6000000);
         statusView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         statusView.setGravity(Gravity.CENTER);
-        statusView.setPadding(dp(24), dp(24), dp(24), dp(24));
-        videoArea.addView(statusView, new FrameLayout.LayoutParams(
+        statusView.setPadding(dp(48), dp(24), dp(24), dp(24));
+        root.addView(statusView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         controlHint = new TextView(this);
         controlHint.setText(R.string.radio_no_control);
         controlHint.setTextColor(0xFF000000);
@@ -76,14 +87,35 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
         controlHint.setGravity(Gravity.CENTER);
         controlHint.setPadding(dp(12), dp(10), dp(12), dp(10));
         controlHint.setVisibility(View.GONE);
-        videoArea.addView(controlHint, new FrameLayout.LayoutParams(
+        root.addView(controlHint, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 Gravity.BOTTOM));
-        root.addView(videoArea, new LinearLayout.LayoutParams(
-                0, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+
+        handle = new IconButton(this, IconButton.HANDLE, getString(R.string.radio_buttons),
+                0x99202020);
+        handle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPanelVisible(true);
+            }
+        });
+        root.addView(handle, new FrameLayout.LayoutParams(
+                dp(28), dp(96), Gravity.START | Gravity.CENTER_VERTICAL));
+
+        panel = new LinearLayout(this);
+        panel.setOrientation(LinearLayout.VERTICAL);
+        panel.setBackgroundColor(0xD91C1C1C);
+        addButton(panel, IconButton.BACK, R.string.radio_back, Protocol.ACTION_BACK);
+        addButton(panel, IconButton.HOME, R.string.radio_home, Protocol.ACTION_HOME);
+        addButton(panel, IconButton.RECENTS, R.string.radio_recents, Protocol.ACTION_RECENTS);
+        addButton(panel, IconButton.MENU, R.string.radio_menu, 0);
+        panel.setVisibility(View.GONE);
+        root.addView(panel, new FrameLayout.LayoutParams(
+                dp(PANEL_DP), ViewGroup.LayoutParams.MATCH_PARENT, Gravity.START));
+
         setContentView(root);
 
-        videoArea.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -128,6 +160,7 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
 
     @Override
     protected void onStop() {
+        handler.removeCallbacks(hidePanel);
         client.stop();
         super.onStop();
     }
@@ -140,7 +173,18 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
         }
     }
 
+    private void setPanelVisible(boolean visible) {
+        handler.removeCallbacks(hidePanel);
+        panel.setVisibility(visible ? View.VISIBLE : View.GONE);
+        handle.setVisibility(visible ? View.GONE : View.VISIBLE);
+        if (visible) {
+            handler.postDelayed(hidePanel, PANEL_HIDE_MS);
+        }
+    }
+
     private void forwardTouch(View v, MotionEvent e) {
+        // Measured relative to the video view, so this is right whether the picture is
+        // shown whole, stretched or zoomed (then the view is larger than the screen).
         float w = Math.max(1, v.getWidth());
         float h = Math.max(1, v.getHeight());
         int action = e.getActionMasked();
@@ -176,14 +220,16 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
     }
 
     private void addButton(LinearLayout bar, int icon, int description, final int action) {
-        IconButton button = new IconButton(this, icon, getString(description));
+        IconButton button = new IconButton(this, icon, getString(description), 0x00000000);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (action == 0) {
+                    setPanelVisible(false);
                     showMenu();
                 } else {
                     client.sendGlobalAction(action);
+                    setPanelVisible(true); // keep it open a little longer
                 }
             }
         });
@@ -195,47 +241,92 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
         LinearLayout content = new LinearLayout(this);
         content.setOrientation(LinearLayout.VERTICAL);
         content.setPadding(dp(20), dp(12), dp(20), 0);
+
         TextView code = new TextView(this);
         code.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         code.setText(getString(R.string.radio_menu_code, prefs.radioCode()));
         content.addView(code);
+
+        TextView displayTitle = new TextView(this);
+        displayTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        displayTitle.setPadding(0, dp(16), 0, 0);
+        displayTitle.setText(R.string.radio_display_title);
+        content.addView(displayTitle);
+
+        final String[] modes = {Prefs.DISPLAY_STRETCH, Prefs.DISPLAY_ZOOM, Prefs.DISPLAY_FIT};
+        int[] labels = {R.string.radio_display_stretch, R.string.radio_display_zoom,
+                R.string.radio_display_fit};
+        RadioGroup displayGroup = new RadioGroup(this);
+        String current = prefs.displayMode();
+        for (int i = 0; i < modes.length; i++) {
+            RadioButton option = new RadioButton(this);
+            option.setId(i + 1);
+            option.setText(labels[i]);
+            option.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            displayGroup.addView(option);
+            if (modes[i].equals(current)) {
+                displayGroup.check(option.getId());
+            }
+        }
+        displayGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                String mode = modes[checkedId - 1];
+                prefs.setDisplayMode(mode);
+                videoView.setMode(mode);
+            }
+        });
+        content.addView(displayGroup);
+
         final EditText ip = new EditText(this);
         ip.setHint(R.string.radio_menu_ip_hint);
         ip.setInputType(InputType.TYPE_CLASS_PHONE);
         ip.setText(prefs.manualPhoneIp());
         content.addView(ip);
 
-        new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.radio_menu_title)
                 .setView(content)
                 .setPositiveButton(R.string.radio_menu_save, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface d, int which) {
                         prefs.setManualPhoneIp(ip.getText().toString().trim());
                     }
                 })
                 .setNeutralButton(R.string.switch_mode, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface d, int which) {
                         prefs.setMode(null);
                         startActivity(new Intent(RadioActivity.this, StartActivity.class));
                         finish();
                     }
                 })
                 .setNegativeButton(R.string.radio_menu_close, null)
-                .show();
+                .create();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface d) {
+                hideSystemUi();
+            }
+        });
+        dialog.show();
     }
 
     @SuppressWarnings("deprecation")
     private void hideSystemUi() {
+        View decor = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(
+            decor.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LOW_PROFILE);
         }
     }
 
@@ -282,6 +373,6 @@ public class RadioActivity extends Activity implements RadioClient.Listener {
             return new int[] {areaWidth, areaHeight};
         }
         DisplayMetrics m = getResources().getDisplayMetrics();
-        return new int[] {Math.max(1, m.widthPixels - dp(SIDEBAR_DP)), m.heightPixels};
+        return new int[] {m.widthPixels, m.heightPixels};
     }
 }

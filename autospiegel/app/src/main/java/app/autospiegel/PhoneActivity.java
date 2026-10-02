@@ -101,16 +101,16 @@ public class PhoneActivity extends Activity {
 
         RadioGroup orientation = (RadioGroup) findViewById(R.id.orientation);
         String current = prefs.orientation();
-        orientation.check(Prefs.ORIENTATION_LANDSCAPE.equals(current) ? R.id.orientation_landscape
+        orientation.check(Prefs.ORIENTATION_PORTRAIT.equals(current) ? R.id.orientation_portrait
                 : Prefs.ORIENTATION_FREE.equals(current) ? R.id.orientation_free
-                : R.id.orientation_portrait);
+                : R.id.orientation_landscape);
         orientation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                prefs.setOrientation(checkedId == R.id.orientation_landscape
-                        ? Prefs.ORIENTATION_LANDSCAPE
+                prefs.setOrientation(checkedId == R.id.orientation_portrait
+                        ? Prefs.ORIENTATION_PORTRAIT
                         : checkedId == R.id.orientation_free
-                                ? Prefs.ORIENTATION_FREE : Prefs.ORIENTATION_PORTRAIT);
+                                ? Prefs.ORIENTATION_FREE : Prefs.ORIENTATION_LANDSCAPE);
                 if (MirrorService.running) {
                     startService(new Intent(PhoneActivity.this, MirrorService.class)
                             .setAction(MirrorService.ACTION_ORIENTATION));

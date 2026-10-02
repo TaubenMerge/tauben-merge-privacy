@@ -11,12 +11,22 @@ final class Prefs {
     static final String MODE_PHONE = "phone";
     static final String MODE_RADIO = "radio";
 
-    /** Phone stays upright; the radio shows a narrow, tall picture. */
-    static final String ORIENTATION_PORTRAIT = "portrait";
-    /** Phone turns sideways; the picture fills the wide radio screen. */
+    /**
+     * Phone content is shown sideways, so it fills the wide radio screen. The phone itself can
+     * stay upright in its holder.
+     */
     static final String ORIENTATION_LANDSCAPE = "landscape";
+    /** Phone content stays upright; the radio shows a narrow, tall picture. */
+    static final String ORIENTATION_PORTRAIT = "portrait";
     /** Leave rotation to the phone. */
     static final String ORIENTATION_FREE = "free";
+
+    /** Radio fills the screen, squeezing the picture a little. */
+    static final String DISPLAY_STRETCH = "stretch";
+    /** Radio fills the screen, cutting off the picture's edges. */
+    static final String DISPLAY_ZOOM = "zoom";
+    /** Radio shows the whole picture with black bars. */
+    static final String DISPLAY_FIT = "fit";
 
     private final SharedPreferences sp;
 
@@ -45,7 +55,7 @@ final class Prefs {
     }
 
     String orientation() {
-        return sp.getString("orientation", ORIENTATION_PORTRAIT);
+        return sp.getString("orientation", ORIENTATION_LANDSCAPE);
     }
 
     void setOrientation(String orientation) {
@@ -62,6 +72,14 @@ final class Prefs {
             sp.edit().putString("radio_code", code).apply();
         }
         return code;
+    }
+
+    String displayMode() {
+        return sp.getString("display_mode", DISPLAY_STRETCH);
+    }
+
+    void setDisplayMode(String mode) {
+        sp.edit().putString("display_mode", mode).apply();
     }
 
     String manualPhoneIp() {

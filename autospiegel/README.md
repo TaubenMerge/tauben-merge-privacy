@@ -2,8 +2,9 @@
 
 Kostenlose, schlanke Alternative zu Android Auto für ältere Android-Autoradios.
 Das Handy schickt sein Bild per WLAN ans Radio, und du bedienst das Handy über den
-Touchscreen im Auto: tippen, wischen, mit zwei Fingern zoomen, außerdem gibt es
-Tasten für Zurück, Startbildschirm und Letzte Apps.
+Touchscreen im Auto: tippen, wischen und mit zwei Fingern zoomen. Das Bild füllt den
+Radio-Bildschirm komplett aus. Die Tasten für Zurück, Startbildschirm und Letzte Apps
+klappst du über eine kleine Lasche am linken Rand aus.
 
 - **Kostenlos**, ohne Abo, ohne Werbung und ohne Google-Konto.
 - **Sehr leicht fürs Radio:** Die App ist ca. 60 KB groß. Das Radio spielt nur ein
@@ -40,11 +41,11 @@ Quellen erlauben.
      „App-Info öffnen“ → ⋮ oben rechts → „Eingeschränkte Einstellungen zulassen“
      und noch einmal versuchen.
    - **Radio-Code** eingeben → Speichern. Dadurch kann sich nur dein Radio verbinden.
-   - **Ausrichtung:** Standard ist **„Hochkant festhalten“**. Damit dreht sich das
-     Handy beim Spiegeln nicht, auch wenn es in der Halterung wackelt. Gib dafür die
-     Erlaubnis „Über anderen Apps einblenden“. Wer lieber ein größeres Bild auf dem
-     Radio möchte, wählt „Querformat“. Die Änderung gilt sofort, auch während des
-     Spiegelns.
+   - **Ausrichtung:** Standard ist **„Inhalt quer“**. Das Handy bleibt hochkant in
+     der Halterung, nur das Bild darauf wird quer dargestellt. So füllt es den breiten
+     Radio-Bildschirm. Dafür braucht die App die Erlaubnis „Über anderen Apps
+     einblenden“. Mit „Inhalt hochkant“ bleibt auch das Bild aufrecht, dann zeigt das
+     Radio aber nur einen schmalen Streifen. Die Änderung gilt sofort.
 3. Handy und Radio per **Bluetooth** koppeln (für Musik und Anrufe), falls noch nicht
    geschehen.
 
@@ -62,8 +63,11 @@ Mit „Spiegeln beenden“ oder über die Benachrichtigung hörst du auf.
 
 - **Touch:** Solange am Handy die Bedienung noch nicht erlaubt ist, zeigt das Radio
   unten einen gelben Hinweis. Ist er verschwunden, funktioniert Touch.
-- **Hochkant** füllt das Bild auf dem breiten Radio-Bildschirm nur die Höhe aus. Es
-  ist also schmal, links und rechts bleibt Schwarz. Mit „Querformat“ wird es größer.
+- **Vollbild am Radio:** Ein Handybild ist breiter als die meisten Radio-Bildschirme.
+  Damit es den Bildschirm trotzdem ganz füllt, wird es standardmäßig leicht gestreckt.
+  Über die Lasche → ⋮ kannst du stattdessen „Ränder abgeschnitten“ oder „Ganzes Bild“
+  (mit schwarzen Rändern) wählen. Ein hochkant ausgerichtetes Bild zeigt das Radio
+  immer ganz und deshalb schmal.
 - **Wischen und Ziehen** werden ausgeführt, sobald du den Finger loslässt. Kurze
   Wischer fühlen sich normal an, langes Ziehen (z. B. eine Karte verschieben) kommt
   etwas verzögert an. Tippen geht sofort.
@@ -71,8 +75,8 @@ Mit „Spiegeln beenden“ oder über die Benachrichtigung hörst du auf.
   Schrift- bzw. Anzeigegröße erhöhen.
 - Manche Apps (Banking, Netflix usw.) sperren Bildschirmaufnahmen. Sie bleiben am
   Radio schwarz.
-- Falls das Radio das Handy nicht findet: Am Radio auf ⋮ tippen und die Handy-IP von
-  Hand eintragen.
+- Falls das Radio das Handy nicht findet: Am Radio die Lasche links antippen, auf ⋮
+  tippen und die Handy-IP von Hand eintragen.
 
 ## Technik
 
