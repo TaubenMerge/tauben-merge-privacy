@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Aniworld Blocker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>Aniworld Blocker</h1>
+
+  <label class="zeile">
+    <span>Blocker aktiv</span>
+    <input type="checkbox" id="schalter">
+  </label>
+
+  <div class="zaehler">
+    <div id="zahl">0</div>
+    <div class="klein">geblockte Elemente</div>
+  </div>
+
+  <button id="zuruecksetzen">Zähler zurücksetzen</button>
+  <p class="klein" id="hinweis">Nach dem Umschalten die Seite neu laden (F5).</p>
+
+  <script src="popup.js"></script>
+</body>
+</html>
